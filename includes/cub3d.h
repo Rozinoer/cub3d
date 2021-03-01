@@ -7,6 +7,8 @@
 #include <fcntl.h>
 #include <math.h>
 # define TILE_SIZE 32
+# define screenWidth 1920
+# define screenHight 1080
 #include <stdio.h>
 
 # define W 13

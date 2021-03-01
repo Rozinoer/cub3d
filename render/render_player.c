@@ -1,59 +1,52 @@
 #include "cub3d.h"
-
-static void print_wall(t_game *game, int to_wall, int flag)
+// # define MAX_DEPTH 16
+static void            drow_line(t_data data, int current_x, int startY, int endY, int color)
 {
-    int static wallX = 0;
-    int wallY;
-    int currentY;
-    int wall_hight;
-    int semi_wall_hight;
-
-    wall_hight = (float)((to_wall * 700) / 277);
-    semi_wall_hight = wall_hight / 2;
-    wallY = 1080 / 2;
-    // printf("Высота стены: %d\nПоловина высоты стены : %d\n", wall_hight, semi_wall_hight);
-    // sleep(1000);
-    while (wallX % 6 != 0 && wallX <= 1920)
+    char    *dst;
+    while (startY < endY)
     {
-        currentY = wallY - semi_wall_hight;
-        while (currentY != wallY + semi_wall_hight)
-        {
-            my_mlx_pixel_put(game->data, wallX, currentY, 0xffddbb);
-            currentY++;
-        }
-        wallX++;
+        dst = data.addr + (startY * data.line_length + current_x * (data.bits_per_pixel / 8));
+        *(unsigned int*)dst = color;
+        startY++;
     }
-    wallX++;
-    if (flag == 320 || flag == 321)
-        wallX = 0;
 }
 
  void print_ray(t_game *game)
 {
+    double to_wall;
+
     double start = game->player.rotation_angle - (30 * M_PI / 180);
     double end = game->player.rotation_angle + (30 * M_PI / 180);
     double x;
     double y;
-    int to_wall;
-    int flag = 0;
-        //960 540
-    int i = 0;
+    int x_width = 0;
     while(start <= end)
-    {
+    {   
+        to_wall = 0;
         x = game->player.posX;
         y = game->player.posY;
         while (game->map.map[(int)(y / TILE_SIZE)][(int)(x / TILE_SIZE)] != '1')
         {
             x += cos(start);
             y += sin(start);
+            to_wall += 1;
             my_mlx_pixel_put(game->data, x, y, 0xff0000);
         }
-        start +=(((float)60 / 320) * M_PI / 180);
-        printf("angle = %f\n x = %f\ny = %f\n posX = %f\n posY = %f\n",start * 180 / M_PI,x,y,game->player.posX,game->player.posY);
-        to_wall = (int)sqrt(pow(x - game->player.posX, 2) + pow(y - game->player.posY, 2));
-        flag++;
-        print_wall(game, to_wall, flag);
-        i++;
+        printf("%f\n", to_wall);
+        start +=(((float)60 / screenWidth) * M_PI / 180);
+        // to_wall *= cos(game->player.rotation_angle - start);
+        int lineHeight = (int)(screenHight / (to_wall / TILE_SIZE));
+
+        int drawStart = -lineHeight / 2 + screenHight / 2;
+
+        if(drawStart < 0)
+            drawStart = 0;
+        int drawEnd = lineHeight / 2 + screenHight / 2;
+
+        if(drawEnd >= screenHight)
+            drawEnd = screenHight - 1;
+        drow_line(game->data,x_width, drawStart, drawEnd, 0x390039);
+        x_width++;
     }
 }
 void print_player(t_game *game)

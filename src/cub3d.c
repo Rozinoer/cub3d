@@ -11,27 +11,27 @@ void            my_mlx_pixel_put(t_data data, int x, int y, int color)
 
 int render_next_frame(t_game *game)
 {
+    double move_step;
+
+    move_step = game->player.walk_dir * game->player.move_speed;
+    game->player.posX = (game->player.posX + cos(game->player.rotation_angle) * move_step) ;
+    game->player.posY= (game->player.posY + sin(game->player.rotation_angle) * move_step) ;
+    game->player.rotation_angle += game->player.turn_dir * game->player.rotation_speed;
     print_map(game);
 	print_player(game);
     print_ray(game);
     mlx_put_image_to_window(game->mlx.mlx, game->mlx.mlx_win, game->data.img, 0, 0);
-    printf("render\n");
-    
     return (0);
 }
 
 int update(t_game *game)
 {
-    double move_step;
+    game->data.img = mlx_new_image(game->mlx.mlx, screenWidth, screenHight);
+    game->data.addr = mlx_get_data_addr(game->data.img, &game->data.bits_per_pixel, &game->data.line_length,&game->data.endian);
+
 
     mlx_hook(game->mlx.mlx_win, 2, 1L<<0, key_pressed, game);
-    
-    move_step = game->player.walk_dir * game->player.move_speed;
-    game->player.posX = (int)(game->player.posX + cos(game->player.rotation_angle) * move_step) ;
-    game->player.posY= (int)(game->player.posY + sin(game->player.rotation_angle) * move_step) ;
-    game->player.rotation_angle += game->player.turn_dir * game->player.rotation_speed;
     render_next_frame(game);
-
     mlx_hook(game->mlx.mlx_win, 3, 1L<<1, key_released, game);
     return (0);
 }
@@ -39,7 +39,7 @@ int update(t_game *game)
 int main()
 {
     t_game game;
-    game.data.img = mlx_new_image(game.mlx.mlx, 1920, 1080);
+    game.data.img = mlx_new_image(game.mlx.mlx, screenWidth, screenHight);
     game.data.addr = mlx_get_data_addr(game.data.img, &game.data.bits_per_pixel, &game.data.line_length,
                                  &game.data.endian);
     parser(&game);

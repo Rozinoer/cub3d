@@ -28,7 +28,6 @@ int key_released(int keycode, t_game *game)
 		game->player.turn_dir = 0;
 	else if (keycode == A)
 		game->player.turn_dir = 0;
-
     printf("key[%d] was unpressed\n", keycode);
 	return (0);
 }

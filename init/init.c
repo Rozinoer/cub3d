@@ -2,8 +2,8 @@
 
 static int init_player(t_game *game)
 {
-    game->player.posX = 19 * TILE_SIZE / 2;
-	game->player.posY = 8 * TILE_SIZE / 2;
+    game->player.posX = 5.0 * TILE_SIZE;
+	game->player.posY = 5.0 * TILE_SIZE;
 	game->player.radius = 5;
 	game->player.turn_dir = 0; // -1 left, +1 right
 	game->player.walk_dir = 0;
@@ -17,7 +17,7 @@ static int init_player(t_game *game)
 static int init_window(t_game *game)
 {
     game->mlx.mlx = mlx_init();
-    game->mlx.mlx_win = mlx_new_window(game->mlx.mlx, 1920, 1080, "cub3d");
+    game->mlx.mlx_win = mlx_new_window(game->mlx.mlx, screenWidth, screenHight, "cub3d");
     return (0);
 }
 
