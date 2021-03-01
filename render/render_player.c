@@ -32,7 +32,7 @@ static void            drow_line(t_data data, int current_x, int startY, int end
             to_wall += 1;
             my_mlx_pixel_put(game->data, x, y, 0xff0000);
         }
-        printf("%f\n", to_wall);
+        printf("%f\n", to_wall);        
         start +=(((float)60 / screenWidth) * M_PI / 180);
         // to_wall *= cos(game->player.rotation_angle - start);
         int lineHeight = (int)(screenHight / (to_wall / TILE_SIZE));
@@ -49,11 +49,36 @@ static void            drow_line(t_data data, int current_x, int startY, int end
         x_width++;
     }
 }
+
+void print_back(t_game *game)
+{
+    int x;
+    int y;
+
+    x = 0;
+    y = 0;
+    while (x != screenWidth)
+    {
+        while (y != screenHight)
+        {
+            if (y <= screenHight * 0.5)
+                my_mlx_pixel_put(game->data, x, y, 0x00C4FF);
+            else
+                my_mlx_pixel_put(game->data, x, y, 0xB3FF00);
+            y++;    
+        }
+        x++;
+        y = 0;
+    }
+    
+}
+
 void print_player(t_game *game)
 {
     float x = game->player.posX;
     float y = game->player.posY; 
     int R = game->player.radius;
+
 	while (R != 0) {
 		for (double angle = 0; angle < 2 * M_PI; angle += 0.01) {
 			int main_x = R * cos(angle);

@@ -17,8 +17,9 @@ int render_next_frame(t_game *game)
     game->player.posX = (game->player.posX + cos(game->player.rotation_angle) * move_step) ;
     game->player.posY= (game->player.posY + sin(game->player.rotation_angle) * move_step) ;
     game->player.rotation_angle += game->player.turn_dir * game->player.rotation_speed;
+    print_back(game);
     print_map(game);
-	print_player(game);
+    print_player(game);
     print_ray(game);
     mlx_put_image_to_window(game->mlx.mlx, game->mlx.mlx_win, game->data.img, 0, 0);
     return (0);

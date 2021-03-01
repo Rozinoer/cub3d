@@ -76,5 +76,6 @@ int     update(t_game *game);
 void    my_mlx_pixel_put(t_data data, int x, int y, int color);
 int     render_next_frame(t_game *game);
 void    print_ray(t_game *game);
+void    print_back(t_game *game);
 
 #endif
