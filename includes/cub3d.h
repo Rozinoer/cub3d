@@ -25,6 +25,7 @@ typedef struct  s_data {
     int         endian;
 }               t_data;
 
+
 typedef struct s_player
 {
     float posX ;
@@ -33,6 +34,10 @@ typedef struct s_player
 	int turn_dir ; // -1 left, +1 right
 	int walk_dir ;
 	double rotation_angle ;
+    double dirX;
+    double dirY;
+    double planeX;
+    double planeY;
 	double rotation_speed ;
 	double move_speed ;
 	float tick_last_frame;
@@ -42,9 +47,6 @@ typedef struct s_player
 typedef struct s_map
 {
     char    **map;
-    int     tale_size;
-    int     height;
-    int     width;
     int     color;
 }               t_map;
 
@@ -63,6 +65,7 @@ typedef struct s_game
     t_list  *param;
     t_player player;
     t_data   data;
+    // t_ray   ray;
 }               t_game;
 
 int     init(t_game *game);

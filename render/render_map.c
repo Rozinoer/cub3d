@@ -11,9 +11,19 @@ static int    rect(t_game *game, int main_x, int main_y, char c)
 	{
 		while (x < TILE_SIZE)
 		{
-			if (ft_isdigit(c))
-				// mlx_pixel_put(game->mlx.mlx, game->mlx.mlx_win, main_x + x, main_y + y, game->map.color);
+			if (ft_isdigit(c) || c == 'N')
+			{
 				my_mlx_pixel_put(game->data, main_x + x, main_y + y, game->map.color);
+				if (y == 0 || y == TILE_SIZE - 1)
+				{
+					if (x == 0 || x == TILE_SIZE - 1)
+					{
+						my_mlx_pixel_put(game->data, main_x + x, main_y + y, 0x222222);
+					}
+					
+				}
+				
+			}
 			x++;
 		}
 		y++;
@@ -57,11 +67,6 @@ void print_map(t_game *game)
 		str = game->map.map[i];
 		while (*str)
 		{
-			// if (*str == 'N')
-			// {
-			// 	game->player.posX = tmp * TILE_SIZE;
-			// 	game->player.posY = i * TILE_SIZE;
-			// }
 			game->map.color = *str - '0' == 1 ? 0x222222 : 0xFFFFFF;
 			main_x += rect(game, main_x, main_y, *str) * TILE_SIZE;
 			str++;
