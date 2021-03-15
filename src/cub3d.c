@@ -69,13 +69,8 @@ static void init_struct(t_game *game)
 	player.turn_dir = 0; // -1 left, +1 right
 	player.walk_dir = 0;
 	player.rotation_angle = M_PI * 3 / 2;
-    player.dirX = 0;
-    player.dirY = -1;
-    player.planeX = 0;
-    player.planeY = 0.66;
 	player.rotation_speed = 3 * (M_PI / 180);
 	player.move_speed = 3.0;
-	player.tick_last_frame = 0;
 
     game->player = player;
 
@@ -89,6 +84,7 @@ int main()
     game.data.img = mlx_new_image(game.mlx.mlx, screenWidth, screenHight);
     game.data.addr = mlx_get_data_addr(game.data.img, &game.data.bits_per_pixel, &game.data.line_length,
                                  &game.data.endian);
+                                 
     parser(&game);
     print_map(&game);
     mlx_loop_hook(game.mlx.mlx, update, &game);

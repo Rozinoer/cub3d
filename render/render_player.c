@@ -22,7 +22,7 @@ static double print_ray_on_map(t_game *game, double start)
     {
         x = game->player.posX + to_wall * cos(start);
         y = game->player.posY + to_wall * sin(start);
-        to_wall += 0.5;
+        to_wall += 1;
         my_mlx_pixel_put(game->data, x, y, 0xff0000);
     }
     return (to_wall);    
@@ -38,7 +38,6 @@ static double print_ray_on_map(t_game *game, double start)
     {   
         to_wall = print_ray_on_map(game, start) * cos(game->player.rotation_angle - start);
         int lineHeight = (int)(screenHight / to_wall * TILE_SIZE);
-        // sleep(100);
         start +=(((float)60 / screenWidth) * M_PI / 180);
         int drawStart = screenHight / 2 - lineHeight / 2;
 
@@ -48,8 +47,6 @@ static double print_ray_on_map(t_game *game, double start)
 
         if(drawEnd >= screenHight)
             drawEnd = screenHight - 1;
-        // printf("%d %d %d\n",lineHeight, drawStart, drawEnd);
-        // sleep(1000);
         drow_line(game->data,x_width, drawStart, drawEnd, 0x390039);
         x_width++;
     }
@@ -187,9 +184,9 @@ void print_back(t_game *game)
         while (y != screenHight)
         {
             if (y <= screenHight * 0.5)
-                my_mlx_pixel_put(game->data, x, y, 0x00C4FF);
+                my_mlx_pixel_put(game->data, x, y, game->map.ceiling_color);
             else
-                my_mlx_pixel_put(game->data, x, y, 0xB3FF00);
+                my_mlx_pixel_put(game->data, x, y, game->map.floor_color);
             y++;    
         }
         x++;

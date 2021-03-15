@@ -28,6 +28,10 @@ PARSE_DIR =		parsing/
 
 PARSE_LIST =	parse.c \
 				get_param.c \
+				errors.c \
+				parsing_utils.c \
+				check_map.c \
+				get_param1.c \
 
 RENDER_DIR =	render/
 

@@ -89,6 +89,7 @@ int	mlx_put_image_to_window(void *mlx_ptr, void *win_ptr, void *img_ptr,
 				int x, int y);
 unsigned int	mlx_get_color_value(void *mlx_ptr, int color);
 
+void    mlx_get_screen_size(int *width, int *height);
 
 /*
 ** dealing with Events

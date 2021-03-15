@@ -34,13 +34,8 @@ typedef struct s_player
 	int turn_dir ; // -1 left, +1 right
 	int walk_dir ;
 	double rotation_angle ;
-    double dirX;
-    double dirY;
-    double planeX;
-    double planeY;
 	double rotation_speed ;
 	double move_speed ;
-	float tick_last_frame;
     int to_wall;
 }               t_player;
 
@@ -48,6 +43,13 @@ typedef struct s_map
 {
     char    **map;
     int     color;
+    int     floor_color;
+    int     ceiling_color;
+    char *no_tex;
+    char *so_tex;
+    char *we_tex;
+    char *ea_tex;
+    char *sprite_tex;
 }               t_map;
 
 typedef struct s_mlx
@@ -80,5 +82,11 @@ void    my_mlx_pixel_put(t_data data, int x, int y, int color);
 int     render_next_frame(t_game *game);
 void    print_ray(t_game *game);
 void    print_back(t_game *game);
-
+int     error(int error, char c);
+int     check_identifer(char *str, char *iden);
+int     check_map(t_game *game);
+int     get_sprite_tex(t_game *game);
+int     check_color(char *str, t_game *game, char c);
+int     get_floor_color(t_game *game);
+int     get_ceiling_color(t_game *game);
 #endif
