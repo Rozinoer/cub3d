@@ -11,18 +11,14 @@ static int    rect(t_game *game, int main_x, int main_y, char c)
 	{
 		while (x < TILE_SIZE)
 		{
-			if (ft_isdigit(c) || c == 'N')
+			if (ft_isdigit(c) || c == 'N' || c == 'W' || c == 'S' || c == 'E')
 			{
 				my_mlx_pixel_put(game->data, main_x + x, main_y + y, game->map.color);
 				if (y == 0 || y == TILE_SIZE - 1)
 				{
 					if (x == 0 || x == TILE_SIZE - 1)
-					{
 						my_mlx_pixel_put(game->data, main_x + x, main_y + y, 0x222222);
-					}
-					
 				}
-				
 			}
 			x++;
 		}

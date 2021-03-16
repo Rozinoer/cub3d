@@ -16,8 +16,8 @@ int render_next_frame(t_game *game)
     double newPosY;
 
     move_step = game->player.walk_dir * game->player.move_speed;
-    newPosX = (game->player.posX + cos(game->player.rotation_angle) * move_step);
-    newPosY = (game->player.posY + sin(game->player.rotation_angle) * move_step);
+    newPosX = (game->player.posX + cos(game->player.rotation_angle + game->player.right_move) * move_step);
+    newPosY = (game->player.posY + sin(game->player.rotation_angle + game->player.right_move) * move_step);
     if (game->map.map[(int)(newPosY / TILE_SIZE)][(int)newPosX / TILE_SIZE] != '1')
     {
         game->player.posX = newPosX;
@@ -48,30 +48,51 @@ int update(t_game *game)
     return (0);
 }
 
-// static void get_pos(t_game *game)
-// {
-//     			if (*str == 'N')
-// 			{
-// 				game->player.posX = tmp * TILE_SIZE;
-// 				game->player.posY = i * TILE_SIZE;
-// 				game->player.rotation_angle = 3 * M_PI / 2;
-// 			}
-// }
+static void get_pos(t_player *player, t_game *game)
+{
+    int i;
+    int j;
+    char c;
+
+    i = 0;
+    j = 0;
+    while (i < game->map.map_size)
+    {
+        while (game->map.map[i][j] != '\0')
+        {
+            if (game->map.map[i][j] == 'N' || game->map.map[i][j] == 'S' ||
+            game->map.map[i][j] == 'W' || game->map.map[i][j] == 'E')
+            {
+                c = game->map.map[i][j];
+                player->posX = (float)j * TILE_SIZE;
+                player->posY = (float)i * TILE_SIZE;
+            }
+            j++;
+        }
+        i++;
+        j = 0;
+    }
+    (c == 'N') ? player->rotation_angle = M_PI * 3 / 2 : 0;
+    (c == 'S') ? player->rotation_angle = M_PI / 2 : 0 ;
+    (c == 'W') ? player->rotation_angle = M_PI : 0;
+    (c == 'E') ? player->rotation_angle = 0 : 0;
+}
 
 static void init_struct(t_game *game)
 {
     t_player player;
 
-    // get_pos(game);
-    player.posX = 5.0 * TILE_SIZE;
-	player.posY = 5.0 * TILE_SIZE;
+    get_pos(&player, game);
+    // player.posX = 5.0 * TILE_SIZE;
+	// player.posY = 5.0 * TILE_SIZE;
 	player.radius = 5;
 	player.turn_dir = 0; // -1 left, +1 right
 	player.walk_dir = 0;
-	player.rotation_angle = M_PI * 3 / 2;
+	// player.rotation_angle = M_PI * 3 / 2;
 	player.rotation_speed = 3 * (M_PI / 180);
 	player.move_speed = 3.0;
-
+    player.right_move = 0;
+    player.left_move = 0;
     game->player = player;
 
     init(game);
@@ -80,12 +101,13 @@ static void init_struct(t_game *game)
 int main()
 {
     t_game game;
+
+    parser(&game);
     init_struct(&game);
     game.data.img = mlx_new_image(game.mlx.mlx, screenWidth, screenHight);
     game.data.addr = mlx_get_data_addr(game.data.img, &game.data.bits_per_pixel, &game.data.line_length,
                                  &game.data.endian);
                                  
-    parser(&game);
     print_map(&game);
     mlx_loop_hook(game.mlx.mlx, update, &game);
     mlx_loop(game.mlx.mlx);

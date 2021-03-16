@@ -8,25 +8,38 @@ static int create_rgb(int r, int g, int b)
         return(-1);
 }
 
+static char *skip(char *str, char c, t_game *game, int flag)
+{
+    if (flag == 0)
+    {
+        while ((*str == ' ' || *str == ',') && *str != '\0')
+            str++;
+    }
+    else
+    {
+        while (*str == ' ' && *str != '\0')
+            str++;
+    }
+    if (*str < '0' || *str > '9')
+        error(-1, c, game);
+    return (str);
+}
+
 int check_color(char *str, t_game *game, char c)
 {
     int r;
     int g;
     int b;
-    char *tmp;
     int color;
 
     color = -1;
-    r = ft_atoi(str);
-    tmp = ft_itoa(r);
-    str += ft_strlen(tmp) + 1;
-    g = ft_atoi(str);
-    free(tmp);
-    tmp = ft_itoa(g); 
-    str += ft_strlen(tmp) + 1;
-    b = ft_atoi(str);
-    free(tmp);
-    color = (create_rgb(r, g, b) != -1) ? create_rgb(r, g, b) : color;
+    r = ft_atoi(str = skip(str, c, game, 1));
+    str += ft_nbrlen(r);
+    g = ft_atoi(str = skip(str, c, game, 0));
+    str += ft_nbrlen(g);
+    b = ft_atoi(str = skip(str, c, game, 0));
+    skip(str, c, game, 1);
+    color = create_rgb(r, g, b);
     if (color != -1 && c == 'F')
         game->map.floor_color = color;
     else if (color != -1 && c == 'C')
@@ -41,10 +54,10 @@ int check_identifer(char *str, char *iden)
     int i;
     int j;
 
-    i = ft_strlen(iden) - 1;
+    i = ft_strlen(iden);
     j = 0;
-
-    while (j <= i)
+    
+    while (j <= i && iden[j] != '\0')
     {
         if(str[j] != iden[j])
             return (-1);

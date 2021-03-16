@@ -10,11 +10,12 @@ static int get_map(t_game *game)
     size = ft_lstsize(game->param);
     if(!(game->map.map = ft_calloc(size + 1, sizeof(char *))))
         return (-1);
+    game->map.map_size = size;
     i = -1;
 	while (tmp)
 	{
 		game->map.map[++i] = tmp->content;
-		tmp = tmp ->next;
+		tmp = tmp->next;
 	}
     // if(check_map(game) != 0)
     //     return (-1);
@@ -24,17 +25,19 @@ static int get_map(t_game *game)
 static int    get_resolution(t_game *game)
 {
     char *str;
-
+    char *tmp;
     str = game->param->content;
 
-    if (check_identifer(str, "R"))
+    if (check_identifer(str, "R "))
     {
         str++;
         if (ft_atoi(str) > 1)
             game->mlx.win_width = ft_atoi(str);
         else
             return (-1);
-        str += ft_strlen(ft_itoa(game->mlx.win_width)) + 1;
+        tmp = ft_itoa(game->mlx.win_width);
+        str += ft_strlen(tmp) + 1;
+        free(tmp);
         if (ft_atoi(str) > 1)
             game->mlx.win_hight = ft_atoi(str);
         else
@@ -48,29 +51,23 @@ static int    get_resolution(t_game *game)
 
 static int get_texpack(t_game *game)
 {
-    char *str;
-
-    str = game->param->content;
-    if (check_identifer(str, "NO "))
-        game->map.no_tex = str + 3;
+    if (check_identifer(game->param->content, "NO "))
+        game->map.no_tex = game->param->content + 3;
     else
         return (-1);
     game->param = game->param->next;
-    str = game->param->content;
-    if (check_identifer(str, "SO "))
-        game->map.so_tex = str + 3;
+    if (check_identifer(game->param->content, "SO "))
+        game->map.so_tex = game->param->content + 3;
     else
         return (-1);
     game->param = game->param->next;
-    str = game->param->content;
-    if (check_identifer(str, "WE "))
-        game->map.we_tex = str + 3;
+    if (check_identifer(game->param->content, "WE "))
+        game->map.we_tex = game->param->content + 3;
     else
         return (-1);
     game->param = game->param->next;
-    str = game->param->content;
-    if (check_identifer(str, "EA "))
-       game->map.ea_tex = str + 3;
+    if (check_identifer(game->param->content, "EA "))
+       game->map.ea_tex = game->param->content + 3;
     else
         return (-1);
     return (0);
@@ -79,13 +76,12 @@ static int get_texpack(t_game *game)
 void    get_param(t_game *game)
 {
     // char *str = NULL;
-
-    error(get_resolution(game), 'R');
-    error(get_texpack(game), 'T');
-    error(get_sprite_tex(game), 'S');
-    error(get_floor_color(game), 'F');
-    error(get_ceiling_color(game), 'C');
+    error(get_resolution(game), 'R', game);
+    error(get_texpack(game), 'T', game);
+    error(get_sprite_tex(game), 'S', game);
+    error(get_floor_color(game), 'F', game);
+    error(get_ceiling_color(game), 'C', game);
     game->param = game->param->next;
     game->param = game->param->next;
-    get_map(game);
+    error(get_map(game), 'M', game);
 }

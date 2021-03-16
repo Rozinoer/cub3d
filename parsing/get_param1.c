@@ -3,31 +3,30 @@
 int get_floor_color(t_game *game)
 {
     char *str;
+    int i;
 
     game->param = game->param->next;
     str = game->param->content;
-    if (check_identifer(str, "F "))
-    {
-        check_color(str + 2, game, 'F');
+    if (check_identifer(str, "F ") != -1){
+        i = check_color(str + 2, game, 'F');
     }
     else
         return (-1);
-    return (0);
+    return (i);
 }
 
 int get_ceiling_color(t_game *game)
 {
     char *str;
+    int i;
 
     game->param = game->param->next;
     str = game->param->content;
-    if (check_identifer(str, "C "))
-    {
-        check_color(str + 2, game, 'C');
-    }
+    if (check_identifer(str, "C ") != -1)
+        i = check_color(str + 2, game, 'C');
     else
         return (-1);
-    return (0);
+    return (i);
 }
 
 int get_sprite_tex(t_game *game)
