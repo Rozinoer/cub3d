@@ -6,7 +6,7 @@
 #include "../minilibx_opengl_20191021/mlx.h"
 #include <fcntl.h>
 #include <math.h>
-# define TILE_SIZE 32
+# define TILE_SIZE 16
 # define screenWidth 1920
 # define screenHight 1080
 #include <stdio.h>

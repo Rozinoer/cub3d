@@ -7,11 +7,11 @@ void print_back(t_game *game)
 
     x = 0;
     y = 0;
-    while (x != screenWidth)
+    while (x != game->mlx.win_width)
     {
-        while (y != screenHight)
+        while (y != game->mlx.win_hight)
         {
-            if (y <= screenHight * 0.5)
+            if (y <= game->mlx.win_hight * 0.5)
                 my_mlx_pixel_put(game->data, x, y, game->map.ceiling_color);
             else
                 my_mlx_pixel_put(game->data, x, y, game->map.floor_color);

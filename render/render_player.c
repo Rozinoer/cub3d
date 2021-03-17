@@ -22,7 +22,7 @@ static double print_ray_on_map(t_game *game, double start)
     {
         x = game->player.posX + to_wall * cos(start);
         y = game->player.posY + to_wall * sin(start);
-        to_wall += 1;
+        to_wall += 0.1;
         my_mlx_pixel_put(game->data, x, y, 0xff0000);
     }
     return (to_wall);    
