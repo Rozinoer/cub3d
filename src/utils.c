@@ -12,7 +12,6 @@ void get_pos(t_player *player, t_game *game)
 {
     int i;
     int j;
-    char c;
 
     i = 0;
     j = 0;
@@ -23,7 +22,7 @@ void get_pos(t_player *player, t_game *game)
             if (game->map.map[i][j] == 'N' || game->map.map[i][j] == 'S' ||
             game->map.map[i][j] == 'W' || game->map.map[i][j] == 'E')
             {
-                c = game->map.map[i][j];
+                player->direct = game->map.map[i][j];
                 player->posX = (float)j * TILE_SIZE;
                 player->posY = (float)i * TILE_SIZE;
             }
@@ -32,10 +31,10 @@ void get_pos(t_player *player, t_game *game)
         i++;
         j = 0;
     }
-    (c == 'N') ? player->rotation_angle = M_PI * 3 / 2 : 0;
-    (c == 'S') ? player->rotation_angle = M_PI / 2 : 0 ;
-    (c == 'W') ? player->rotation_angle = M_PI : 0;
-    (c == 'E') ? player->rotation_angle = 0 : 0;
+    (player->direct == 'N') ? player->rotation_angle = M_PI * 3 / 2 : 0;
+    (player->direct == 'S') ? player->rotation_angle = M_PI / 2 : 0 ;
+    (player->direct == 'W') ? player->rotation_angle = M_PI : 0;
+    (player->direct == 'E') ? player->rotation_angle = 0 : 0;
 }
 
 void init_struct(t_game *game)

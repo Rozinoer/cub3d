@@ -39,6 +39,7 @@ typedef struct s_player
     double right_move;
     double left_move;
     int to_wall;
+    char direct;
 }               t_player;
 
 typedef struct s_map
@@ -96,4 +97,5 @@ int     get_ceiling_color(t_game *game);
 void    my_mlx_pixel_put(t_data data, int x, int y, int color);
 void    get_pos(t_player *player, t_game *game);
 void    init_struct(t_game *game);
+int     check_map(t_game *game);
 #endif

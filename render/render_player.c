@@ -15,8 +15,8 @@ static double print_ray_on_map(t_game *game, double start)
 {
     double to_wall = 0;
 
-    int x = game->player.posX;
-    int y = game->player.posY;
+    int x = 0;
+    int y = 0;
 
     while (game->map.map[(int)(y / TILE_SIZE)][(int)(x / TILE_SIZE)] != '1')
     {
@@ -31,22 +31,27 @@ static double print_ray_on_map(t_game *game, double start)
  void print_ray(t_game *game)
 {
     double to_wall;
+    double start;
+    int x_width;
+    int lineHeight;
+    int drawEnd;
+    int drawStart;
 
-    double start = game->player.rotation_angle - (30 * M_PI / 180);
-    int x_width = 0;
-    while(x_width != screenWidth)
+    start = game->player.rotation_angle - (30 * M_PI / 180);
+    x_width = 0;
+    while(x_width != game->mlx.win_width)
     {   
         to_wall = print_ray_on_map(game, start) * cos(game->player.rotation_angle - start);
-        int lineHeight = (int)(screenHight / to_wall * TILE_SIZE);
-        start +=(((float)60 / screenWidth) * M_PI / 180);
-        int drawStart = screenHight / 2 - lineHeight / 2;
+        lineHeight = (int)(game->mlx.win_hight / to_wall * TILE_SIZE);
+        start +=(((float)60 / game->mlx.win_width) * M_PI / 180);
+        drawStart = game->mlx.win_hight / 2 - lineHeight / 2;
 
         if(drawStart < 0)
             drawStart = 0;
-        int drawEnd = screenHight / 2 + lineHeight / 2;
+        drawEnd = game->mlx.win_hight / 2 + lineHeight / 2;
 
-        if(drawEnd >= screenHight)
-            drawEnd = screenHight - 1;
+        if(drawEnd >= game->mlx.win_hight)
+            drawEnd = game->mlx.win_hight - 1;
         drow_line(game->data,x_width, drawStart, drawEnd, 0x390039);
         x_width++;
     }
@@ -55,10 +60,10 @@ static double print_ray_on_map(t_game *game, double start)
 // void print_ray(t_game *game)
 // {
 //     printf("hi\n");
-//     for(int current_x = 0; current_x < screenWidth; current_x++)
+//     for(int current_x = 0; current_x < game->mlx.win_width; current_x++)
 //     {
 //       //calculate ray position and direction
-//       double cameraX = 2 * current_x / (double)screenWidth - 1; //x-coordinate in camera space
+//       double cameraX = 2 * current_x / (double)game->mlx.win_width - 1; //x-coordinate in camera space
 //       double rayDirX = game->player.dirX + game->player.planeX * cameraX; // 0
 //       double rayDirY = game->player.dirY + game->player.planeY * cameraX; // 0.66
 //       //which box of the map we're in
@@ -128,13 +133,13 @@ static double print_ray_on_map(t_game *game, double start)
 //       else          perpWallDist = (mapY - game->player.posY + (1 - stepY) / 2) / rayDirY ;
 
 //       //Calculate height of line to draw on screen
-//       int lineHeight = (int)(screenHight / perpWallDist) * TILE_SIZE;
+//       int lineHeight = (int)(game->mlx.win_hight / perpWallDist) * TILE_SIZE;
 //         printf("lineHeight = %d\n", lineHeight);
 //       //calculate lowest and highest pixel to fill in current stripe
-//       int drawStart = -lineHeight / 2 + screenHight / 2;
+//       int drawStart = -lineHeight / 2 + game->mlx.win_hight / 2;
 //       if(drawStart < 0)drawStart = 0;
-//       int drawEnd = lineHeight / 2 + screenHight / 2;
-//       if(drawEnd >= screenHight)drawEnd = screenHight - 1;
+//       int drawEnd = lineHeight / 2 + game->mlx.win_hight / 2;
+//       if(drawEnd >= game->mlx.win_hight)drawEnd = game->mlx.win_hight - 1;
 
 //       //choose wall color
 //       int color = 0xFFFFFF;
