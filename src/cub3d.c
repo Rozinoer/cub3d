@@ -39,7 +39,14 @@ int update(t_game *game)
 int main()
 {
     t_game game;
+    void *img;
+    int *h=NULL;
+    int *w=NULL;
 
+    char *path = "../texture/eagle.png";
+    img = mlx_xpm_file_to_image(game.mlx.mlx, path, w, h);
+    printf("%p", img);
+    // sleep(100);
     parser(&game);
     init_struct(&game);
     game.data.img = mlx_new_image(game.mlx.mlx, game.mlx.win_width, game.mlx.win_hight);
