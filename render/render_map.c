@@ -1,5 +1,28 @@
 #include "cub3d.h"
 
+void print_back(t_game *game)
+{
+    int x;
+    int y;
+
+    x = 0;
+    y = 0;
+    while (x != screenWidth)
+    {
+        while (y != screenHight)
+        {
+            if (y <= screenHight * 0.5)
+                my_mlx_pixel_put(game->data, x, y, game->map.ceiling_color);
+            else
+                my_mlx_pixel_put(game->data, x, y, game->map.floor_color);
+            y++;    
+        }
+        x++;
+        y = 0;
+    }
+    
+}
+
 static int    rect(t_game *game, int main_x, int main_y, char c)
 {
 	int x;
@@ -27,27 +50,6 @@ static int    rect(t_game *game, int main_x, int main_y, char c)
 	}
 	return (1);
 }
-
-// static void print_back(t_game *game)
-// {
-// 	int x;
-// 	int y;
-
-// 	x = 0;
-// 	while (x != screenWidth - 1)
-// 	{
-// 		y = 0;
-// 		while(y != screenHight - 1)
-// 		{
-// 			if (y < screenHight)
-// 				my_mlx_pixel_put(game->data, x, y, 0x0000ff);
-// 			else
-// 				my_mlx_pixel_put(game->data, x, y, 0xffff00);
-// 			y++;
-// 		}
-// 		x++;
-// 	}
-// }
 
 void print_map(t_game *game)
 {

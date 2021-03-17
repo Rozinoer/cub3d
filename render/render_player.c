@@ -172,40 +172,26 @@ static double print_ray_on_map(t_game *game, double start)
 //     }
 // }
 
-void print_back(t_game *game)
-{
-    int x;
-    int y;
-
-    x = 0;
-    y = 0;
-    while (x != screenWidth)
-    {
-        while (y != screenHight)
-        {
-            if (y <= screenHight * 0.5)
-                my_mlx_pixel_put(game->data, x, y, game->map.ceiling_color);
-            else
-                my_mlx_pixel_put(game->data, x, y, game->map.floor_color);
-            y++;    
-        }
-        x++;
-        y = 0;
-    }
-    
-}
-
 void print_player(t_game *game)
 {
-    float x = game->player.posX;
-    float y = game->player.posY; 
-    int R = game->player.radius;
+    float x;
+    float y; 
+    int R;
+    double angle;
 
-	while (R != 0) {
-		for (double angle = 0; angle < 2 * M_PI; angle += 0.01) {
+    angle = 0;
+    x = game->player.posX;
+    y = game->player.posY; 
+    R = game->player.radius;
+	while (R != 0) 
+    {
+        angle = 0;
+		while (angle < 2 * M_PI) 
+        {
 			int main_x = R * cos(angle);
 			int main_y = R * sin(angle);
             my_mlx_pixel_put(game->data, main_x + x, main_y + y, 0xff0000);
+            angle += 0.01;
 		}
 		R -=0.01;
 	}

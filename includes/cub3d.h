@@ -93,4 +93,7 @@ int     get_sprite_tex(t_game *game);
 int     check_color(char *str, t_game *game, char c);
 int     get_floor_color(t_game *game);
 int     get_ceiling_color(t_game *game);
+void    my_mlx_pixel_put(t_data data, int x, int y, int color);
+void    get_pos(t_player *player, t_game *game);
+void    init_struct(t_game *game);
 #endif
