@@ -6,9 +6,7 @@
 #include "../minilibx_opengl_20191021/mlx.h"
 #include <fcntl.h>
 #include <math.h>
-# define TILE_SIZE 16
-# define screenWidth 1920
-# define screenHight 1080
+#define TILE_SIZE 32
 #include <stdio.h>
 
 # define W 13
@@ -25,21 +23,34 @@ typedef struct  s_data {
     int         endian;
 }               t_data;
 
+typedef struct s_ray
+{
+    int stepX;
+    int stepY;
+    int mapX;
+    int mapY;
+    double  deltaDistX;
+    double  deltaDistY;
+    int     lineHeight;
+    int      drawStart;
+    int      drawEnd;
+}               t_ray;
 
 typedef struct s_player
 {
-    float posX ;
-	float posY ;
-	int radius ;
-	int turn_dir ; // -1 left, +1 right
-	int walk_dir ;
-	double rotation_angle ;
-	double rotation_speed ;
-	double move_speed ;
-    double right_move;
-    double left_move;
-    int to_wall;
-    char direct;
+    float       posX ;
+	float       posY;
+    double      sideDistX;
+    double      sideDistY;
+	double      rotation_angle ;
+    double		dirX;
+	double      dirY;
+	double		planeX;
+	double		planeY;
+    double      to_wall;
+    char        direct;
+    int         hit;
+    int         side;
 }               t_player;
 
 typedef struct s_map
@@ -66,13 +77,13 @@ typedef struct s_mlx
 
 typedef struct s_game
 {
-    t_mlx   mlx;
-    t_map   map;
-    t_list  *param;
-    t_list  *pointer;
-    t_player player;
-    t_data   data;
-    // t_ray   ray;
+    t_mlx       mlx;
+    t_map       map;
+    t_list      *param;
+    t_list      *pointer;
+    t_player    player;
+    t_data      data;
+    t_ray      ray;
 }               t_game;
 
 int     init(t_game *game);
@@ -98,4 +109,5 @@ void    my_mlx_pixel_put(t_data data, int x, int y, int color);
 void    get_pos(t_player *player, t_game *game);
 void    init_struct(t_game *game);
 int     check_map(t_game *game);
+void    drow_line(t_data data, int x, int startY, int endY, int color);
 #endif

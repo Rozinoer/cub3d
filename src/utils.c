@@ -8,6 +8,17 @@ void            my_mlx_pixel_put(t_data data, int x, int y, int color)
     *(unsigned int*)dst = color;
 }
 
+void            drow_line(t_data data, int current_x, int startY, int endY, int color)
+{
+    char    *dst;
+    while (startY < endY)
+    {
+        dst = data.addr + (startY * data.line_length + current_x * (data.bits_per_pixel / 8));
+        *(unsigned int*)dst = color;
+        startY++;
+    }
+}
+
 void get_pos(t_player *player, t_game *game)
 {
     int i;
@@ -23,8 +34,8 @@ void get_pos(t_player *player, t_game *game)
             game->map.map[i][j] == 'W' || game->map.map[i][j] == 'E')
             {
                 player->direct = game->map.map[i][j];
-                player->posX = (float)j * TILE_SIZE;
-                player->posY = (float)i * TILE_SIZE;
+                player->posX = j;
+                player->posY = i;
             }
             j++;
         }
@@ -43,14 +54,10 @@ void init_struct(t_game *game)
 
     get_pos(&player, game);
 
-	player.radius = 5;
-	player.turn_dir = 0; // -1 left, +1 right
-	player.walk_dir = 0;
-	player.rotation_speed = 3 * (M_PI / 180);
-	player.move_speed = 3.0;
-    player.right_move = 0;
-    player.left_move = 0;
-
+    player.dirX = -1;
+    player.dirY = 0;
+    player.planeX = 0;
+    player.planeY = 0.66;
     game->player = player;
 
     init(game);
