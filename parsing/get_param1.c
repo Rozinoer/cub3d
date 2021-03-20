@@ -2,45 +2,52 @@
 
 int get_floor_color(t_game *game)
 {
-    char *str;
     int i;
+    t_list *list;
 
-    game->param = game->param->next;
-    str = game->param->content;
-    if (check_identifer(str, "F ") != -1){
-        i = check_color(str + 2, game, 'F');
+    i = -1;
+    list = game->param;
+    while (list->next)
+    {
+        if (check_identifer(list->content, "F ") != -1)
+        {
+            i = check_color(list->content + 2, game, 'F');
+            break;
+        }
+        list = list->next;
     }
-    else
-        return (-1);
     return (i);
 }
 
 int get_ceiling_color(t_game *game)
 {
-    char *str;
     int i;
+    t_list *list;
 
-    game->param = game->param->next;
-    str = game->param->content;
-    if (check_identifer(str, "C ") != -1)
-        i = check_color(str + 2, game, 'C');
-    else
-        return (-1);
+    i = -1;
+    list = game->param;
+    while (list->next)
+    {
+        if (check_identifer(list->content, "C ") != -1)
+        {
+            i = check_color(list->content + 2, game, 'C');
+            break;
+        }
+        list = list->next;
+    }
     return (i);
 }
 
 int get_sprite_tex(t_game *game)
 {
-    char *str;
+    t_list *list;
 
-    game->param = game->param->next;
-    game->param = game->param->next;
-    str = game->param->content;
-    if (check_identifer(str, "S "))
+    list = game->param;
+    while (list->next)
     {
-        game->map.sprite_tex = str + 2;
+        if (check_identifer(list->content, "S "))
+            game->map.sprite_tex = list->content + 2;
+        list = list->next;
     }
-    else
-        return (-1);
     return (0);
 }

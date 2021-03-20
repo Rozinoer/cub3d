@@ -19,6 +19,8 @@ static void error_message(char c)
         ft_putstr("Error. floor color is uncorrect\n");
     else if (c == 'C')
         ft_putstr("Error. ceiling color is uncorrect\n");
+    else if (c == 'P')
+        ft_putstr("Error. player position not found\n");
 }
 
 int error(int error, char c, __unused t_game *game)

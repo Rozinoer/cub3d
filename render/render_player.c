@@ -43,7 +43,9 @@ static void dda_perform(t_game *game, double rayDirX, double rayDirY)
             game->ray.mapY += game->ray.stepY;
             game->player.side = 1;
         }
-        if(game->map.map[game->ray.mapY][game->ray.mapX] == '1')
+        if(game->map.map[game->ray.mapY][game->ray.mapX] == '1' || game->map.map[game->ray.mapY][game->ray.mapX] == '2'
+        || game->map.map[game->ray.mapY][game->ray.mapX] == '3' || game->map.map[game->ray.mapY][game->ray.mapX] == '4' 
+        || game->map.map[game->ray.mapY][game->ray.mapX] == '5')
             hit = 1;
     }
     if(game->player.side == 0)
@@ -98,9 +100,9 @@ void print_ray(t_game *game)
             color = 0xFFFFFF; 
         if (game->map.map[game->ray.mapY][game->ray.mapX] == '5')
             color = yellow_color; 
-
         if (game->player.side == 1) 
             color = color / 1.5;
+        
         drow_line(game->data, x, game->ray.drawStart, game->ray.drawEnd, color);
         x++;
     }

@@ -36,6 +36,7 @@ void get_pos(t_player *player, t_game *game)
                 player->direct = game->map.map[i][j];
                 player->posX = j;
                 player->posY = i;
+                printf("x = %d y = %d\n", j, i);
             }
             j++;
         }
@@ -51,9 +52,9 @@ void get_pos(t_player *player, t_game *game)
 void init_struct(t_game *game)
 {
     t_player player;
-
+    printf("x = %f y = %f\n", player.posX, player.posY);
     get_pos(&player, game);
-
+    printf("x = %f y = %f\n", player.posX, player.posY);
     player.dirX = -1;
     player.dirY = 0;
     player.planeX = 0;
