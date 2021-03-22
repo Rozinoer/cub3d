@@ -20,7 +20,6 @@ void print_back(t_game *game)
         x++;
         y = 0;
     }
-    
 }
 
 static int    rect(t_game *game, int main_x, int main_y, char c)

@@ -25,6 +25,11 @@ int update(t_game *game)
     return (0);
 }
 
+static int check_expansion(char *str)
+{
+    
+}
+
 int main(__unused int args, char **argv)
 {
     t_game game;
