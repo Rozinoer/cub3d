@@ -4,7 +4,7 @@
 int render_next_frame(t_game *game)
 {
     print_back(game);
-    print_map(game);
+    // print_map(game);
     print_ray(game);
 
     mlx_put_image_to_window(game->mlx.mlx, game->mlx.mlx_win, game->data.img, 0, 0);
@@ -13,6 +13,7 @@ int render_next_frame(t_game *game)
 
 int update(t_game *game)
 {
+    mlx_destroy_image(game->mlx.mlx, game->data.img);
     game->data.img = mlx_new_image(game->mlx.mlx, game->mlx.win_width, game->mlx.win_hight);
     game->data.addr = mlx_get_data_addr(game->data.img, &game->data.bits_per_pixel, &game->data.line_length,&game->data.endian);
 
@@ -22,11 +23,12 @@ int update(t_game *game)
     return (0);
 }
 
-int main()
+int main(__unused int args, char **argv)
 {
     t_game game;
 
-    parser(&game);
+    mlx_get_screen_size(&game.mlx.monitor_width, &game.mlx.monitor_hight);
+    parser(&game, argv[1]);
     init_struct(&game);
     game.data.img = mlx_new_image(game.mlx.mlx, game.mlx.win_width, game.mlx.win_hight);
     game.data.addr = mlx_get_data_addr(game.data.img, &game.data.bits_per_pixel, &game.data.line_length,

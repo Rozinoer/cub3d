@@ -33,7 +33,6 @@ static int get_map(t_game *game)
 
 static int    get_resolution(t_game *game)
 {
-    char *str;
     char *tmp;
     t_list *list;
 
@@ -42,17 +41,15 @@ static int    get_resolution(t_game *game)
     {
         if (check_identifer(list->content, "R ") == 1)
         {   
-            str = list->content;
-            str++;
-            if (ft_atoi(str) > 1)
-                game->mlx.win_width = ft_atoi(str);
+            if (ft_atoi(++list->content) > 1)
+                game->mlx.win_width = ft_atoi(list->content);
             else
                 return (-1);
             tmp = ft_itoa(game->mlx.win_width);
-            str += ft_strlen(tmp) + 1;
+            list->content += ft_strlen(tmp) + 1;
             free(tmp);
-            if (ft_atoi(str) > 1)
-                game->mlx.win_hight = ft_atoi(str);
+            if (ft_atoi(list->content) > 1)
+                game->mlx.win_hight = ft_atoi(list->content);
             else
                 return (-1);
             break;

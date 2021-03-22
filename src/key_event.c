@@ -1,5 +1,24 @@
 #include "cub3d.h"
 
+static	void collusion(t_game *game, int rotSpeed, int flag)
+{
+	double newPosX;
+	double newPosY
+	if (game->map.map[(int)(game->player.posX + game->player.dirY * rotSpeed)]
+	[(int)(game->player.posX + game->player.dirX * rotSpeed)] != '1' && flag == 1)
+	{
+		game->player.posX += game->player.dirX * rotSpeed;
+      	game->player.posY += game->player.dirY * rotSpeed;
+	}
+	
+	if (game->map.map[(int)(game->player.posX + game->player.dirY * rotSpeed)]
+	[(int)(game->player.posX + game->player.dirX * rotSpeed)] != '1' && flag == 2)
+	{
+		game->player.posX += game->player.dirX * rotSpeed;
+      	game->player.posY += game->player.dirY * rotSpeed;
+	}
+}
+
 static void another_key(int keycode, t_game *game, double oldDirX, double oldPlaneX)
 {
 	double rotSpeed;
@@ -33,15 +52,17 @@ int key_pressed(int keycode, t_game *game)
     {
 		if (keycode == S)
 			rotSpeed *= -1;
-		game->player.posX += game->player.dirX * rotSpeed;
-      	game->player.posY += game->player.dirY * rotSpeed;
+		collusion(game, rotSpeed, 1);
+		// game->player.posX += game->player.dirX * rotSpeed;
+      	// game->player.posY += game->player.dirY * rotSpeed;
     }
     if (keycode == A || keycode == D)
     {
 		if (keycode == A)
 			rotSpeed *= -1;
-		game->player.posY -= -game->player.dirX * rotSpeed;
-		game->player.posX -= game->player.dirY * rotSpeed;
+		collusion(game, rotSpeed, 2);
+		// game->player.posY -= -game->player.dirX * rotSpeed;
+		// game->player.posX -= game->player.dirY * rotSpeed;
     }
     else if (keycode == 124 || keycode == 123 || keycode == 53)
 		another_key(keycode, game, oldDirX, oldPlaneX);

@@ -73,6 +73,8 @@ typedef struct s_mlx
     void    *mlx_win;
     int     win_hight;
     int     win_width;
+    int     monitor_hight;
+    int     monitor_width;
 }               t_mlx;
 
 typedef struct s_game
@@ -87,7 +89,7 @@ typedef struct s_game
 }               t_game;
 
 int     init(t_game *game);
-void    parser(t_game *game);
+void    parser(t_game *game, char *str);
 void    get_param(t_game *game);
 void    print_map(t_game *game);
 void    print_player(t_game *game);

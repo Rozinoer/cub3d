@@ -36,17 +36,16 @@ void get_pos(t_player *player, t_game *game)
                 player->direct = game->map.map[i][j];
                 player->posX = j;
                 player->posY = i;
-                printf("x = %d y = %d\n", j, i);
             }
             j++;
         }
         i++;
         j = 0;
     }
-    (player->direct == 'N') ? player->rotation_angle = M_PI * 3 / 2 : 0;
-    (player->direct == 'S') ? player->rotation_angle = M_PI / 2 : 0 ;
-    (player->direct == 'W') ? player->rotation_angle = M_PI : 0;
-    (player->direct == 'E') ? player->rotation_angle = 0 : 0;
+    (player->direct == 'N') ? player->rotation_angle = M_PI * 3 / 2 : -1;
+    (player->direct == 'S') ? player->rotation_angle = M_PI / 2 : -1 ;
+    (player->direct == 'W') ? player->rotation_angle = M_PI : -1;
+    (player->direct == 'E') ? player->rotation_angle = 0 : -1;
 }
 
 void init_struct(t_game *game)
@@ -58,6 +57,8 @@ void init_struct(t_game *game)
     player.dirY = 0;
     player.planeX = 0;
     player.planeY = 0.66;
+    player.direct = 0;
+    get_pos(&player, game);
     game->player = player;
 
     init(game);
