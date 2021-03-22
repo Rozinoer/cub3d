@@ -4,6 +4,7 @@
 int render_next_frame(t_game *game)
 {
     print_back(game);
+    print_map(game);
     print_ray(game);
 
     mlx_put_image_to_window(game->mlx.mlx, game->mlx.mlx_win, game->data.img, 0, 0);

@@ -5,7 +5,7 @@ static void another_key(int keycode, t_game *game, double oldDirX, double oldPla
 	double rotSpeed;
 
 	rotSpeed = 0.1;
-	if (keycode == 124)
+	if (keycode == 123)
 		rotSpeed *= -1;
     else if (keycode == 53)
     {
@@ -38,7 +38,7 @@ int key_pressed(int keycode, t_game *game)
     }
     if (keycode == A || keycode == D)
     {
-		if (keycode == D)
+		if (keycode == A)
 			rotSpeed *= -1;
 		game->player.posY -= -game->player.dirX * rotSpeed;
 		game->player.posX -= game->player.dirY * rotSpeed;

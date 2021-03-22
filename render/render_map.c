@@ -65,7 +65,7 @@ void print_map(t_game *game)
 		str = game->map.map[i];
 		while (*str)
 		{
-			game->map.color = *str - '0' == 1 ? 0x222222 : 0xFFFFFF;
+			game->map.color = *str - '0' >= 1 ? 0x222222 : 0xFFFFFF;
 			main_x += rect(game, main_x, main_y, *str) * TILE_SIZE;
 			str++;
 			tmp++;
