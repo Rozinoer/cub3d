@@ -8,7 +8,8 @@
 #include <math.h>
 #define TILE_SIZE 32
 #include <stdio.h>
-
+# define FILE_BMP "cub3D.bmp"
+# define ALLBMPHEADER 54
 # define W 13
 # define S 1
 # define D 2
@@ -75,6 +76,7 @@ typedef struct s_mlx
     int     win_width;
     int     monitor_hight;
     int     monitor_width;
+    char    *file;
 }               t_mlx;
 
 typedef struct s_game
@@ -86,6 +88,7 @@ typedef struct s_game
     t_player    player;
     t_data      data;
     t_ray      ray;
+    int         save;
 }               t_game;
 
 int     init(t_game *game);
@@ -112,4 +115,5 @@ void    get_pos(t_player *player, t_game *game);
 void    init_struct(t_game *game);
 int     check_map(t_game *game);
 void    drow_line(t_data data, int x, int startY, int endY, int color);
+int     screenshot(t_game *game);
 #endif

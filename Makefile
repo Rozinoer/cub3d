@@ -20,6 +20,7 @@ SRC_DIR =		src/
 SRC_LIST =		cub3d.c \
 				key_event.c \
 				utils.c \
+				screenshot.c \
 
 INIT_DIR =		init/
 

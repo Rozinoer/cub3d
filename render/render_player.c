@@ -64,8 +64,8 @@ void print_ray(t_game *game)
     while (x <= game->mlx.win_width)
     {
         cameraX = 2 * x / (double)game->mlx.win_width - 1;  
-        rayDirX = game->player.dirX - game->player.planeX * cameraX;
-        rayDirY = game->player.dirY - game->player.planeY * cameraX;
+        rayDirX = game->player.dirX + game->player.planeX * cameraX;
+        rayDirY = game->player.dirY + game->player.planeY * cameraX;
 
         game->ray.mapX = (int)(game->player.posX);
         game->ray.mapY = (int)(game->player.posY);

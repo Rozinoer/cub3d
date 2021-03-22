@@ -1,23 +1,26 @@
 #include "cub3d.h"
 
-static	void collusion(t_game *game, int rotSpeed, int flag)
-{
-	double newPosX;
-	double newPosY
-	if (game->map.map[(int)(game->player.posX + game->player.dirY * rotSpeed)]
-	[(int)(game->player.posX + game->player.dirX * rotSpeed)] != '1' && flag == 1)
-	{
-		game->player.posX += game->player.dirX * rotSpeed;
-      	game->player.posY += game->player.dirY * rotSpeed;
-	}
-	
-	if (game->map.map[(int)(game->player.posX + game->player.dirY * rotSpeed)]
-	[(int)(game->player.posX + game->player.dirX * rotSpeed)] != '1' && flag == 2)
-	{
-		game->player.posX += game->player.dirX * rotSpeed;
-      	game->player.posY += game->player.dirY * rotSpeed;
-	}
-}
+// static	void collusion(t_game *game, int rotSpeed, int flag)
+// {
+// 	if (flag == 1)
+// 	{
+// 		if (game->map.map[(int)(game->player.posY + game->player.dirY * rotSpeed)]
+// 		[(int)(game->player.posX + game->player.dirX * rotSpeed)] != '1')
+// 		{
+// 			game->player.posX += game->player.dirX * rotSpeed;
+//       		game->player.posY += game->player.dirY * rotSpeed;
+// 		}
+// 	}
+// 	else
+// 	{
+// 		if (game->map.map[(int)(game->player.posY + game->player.dirY * rotSpeed)]
+// 		[(int)(game->player.posX - game->player.dirX * rotSpeed)] != '1')
+// 		{
+// 			game->player.posY -= -game->player.dirX * rotSpeed;
+// 			game->player.posX -= game->player.dirY * rotSpeed;
+// 		}
+// 	}
+// }
 
 static void another_key(int keycode, t_game *game, double oldDirX, double oldPlaneX)
 {
@@ -30,7 +33,6 @@ static void another_key(int keycode, t_game *game, double oldDirX, double oldPla
     {
       mlx_clear_window(game->mlx.mlx, game->mlx.mlx_win);
       mlx_destroy_window(game->mlx.mlx, game->mlx.mlx_win);
-      free(game->map.map);
       exit(0);
     }
 	game->player.dirX = game->player.dirX * cos(rotSpeed) - game->player.dirY * sin(rotSpeed);
@@ -44,23 +46,43 @@ int key_pressed(int keycode, t_game *game)
 	double rotSpeed;
 	double oldDirX;
 	double oldPlaneX;
+	double smooth;
 
+	smooth = 0.4;
 	oldDirX = game->player.dirX;
 	oldPlaneX = game->player.planeX;
-	rotSpeed = 0.3;
+	rotSpeed = 0.1;
 	if (keycode == W || keycode == S)
     {
 		if (keycode == S)
+		{
 			rotSpeed *= -1;
-		collusion(game, rotSpeed, 1);
+			smooth *= -1;
+		}
+		// collusion(game, rotSpeed, 1);
+		if (game->map.map[(int)(game->player.posY + game->player.dirY * (rotSpeed + smooth))]
+		[(int)(game->player.posX + game->player.dirX * (rotSpeed + smooth))] != '1')
+		{
+			game->player.posX += game->player.dirX * rotSpeed;
+      		game->player.posY += game->player.dirY * rotSpeed;
+		}
 		// game->player.posX += game->player.dirX * rotSpeed;
       	// game->player.posY += game->player.dirY * rotSpeed;
     }
     if (keycode == A || keycode == D)
     {
 		if (keycode == A)
+		{
 			rotSpeed *= -1;
-		collusion(game, rotSpeed, 2);
+			smooth *= -1;
+		}
+		// collusion(game, rotSpeed, 2);
+		if (game->map.map[(int)(game->player.posY + game->player.dirY * (rotSpeed + smooth))]
+		[(int)(game->player.posX - game->player.dirX * (rotSpeed + smooth))] != '1')
+		{
+			game->player.posY -= -game->player.dirX * rotSpeed;
+			game->player.posX -= game->player.dirY * rotSpeed;
+		}
 		// game->player.posY -= -game->player.dirX * rotSpeed;
 		// game->player.posX -= game->player.dirY * rotSpeed;
     }

@@ -1,66 +1,91 @@
 #include "cub3d.h"
 
-// static int check_env(t_game *game, int x, int y)
+// static void			ft_isvalid_first_line(int i, t_map *info)
 // {
-//     char n = game->map.map[y + 1][x];
-//     char s = game->map.map[y - 1][x];
-//     char w = game->map.map[y][x - 1];
-//     char e = game->map.map[y][x + 1];
-    
-//     if (n != '1' || n != '0' || n !='2')
-//     {
-//         /* code */
-//     }
-    
-    
+// 	if (info->arr_map[i] != '1' && !(info->arr_map[i] == ' ' &&
+// 			(info->arr_map[i + info->max_line_len] == '1' ||
+// 			info->arr_map[i + info->max_line_len] == ' ')))
+// 		ft_putstr("Error map: map is open\n");
+// 	if (info->arr_map[i] == ' ')
+// 		info->arr_map[i] = '1';
+// }
+
+// static void			ft_isvalid_middle_line(int i, t_map *info)
+// {
+// 	if ((info->arr_map[i] == '0' || info->arr_map[i] == '2') &&
+// 		(i % info->max_line_len == 0 || (i + 1) % info->max_line_len == 0))
+// 		ft_putstr("Error map: map is open\n");
+// 	else if (info->arr_map[i] == ' ')
+// 	{
+// 		if ((info->arr_map[i + 1] != '1' && info->arr_map[i + 1] != ' ') ||
+// 			(info->arr_map[i - 1] != '1' && info->arr_map[i - 1] != ' ') ||
+// 			(info->arr_map[i - info->max_line_len] != '1' &&
+// 			info->arr_map[i - info->max_line_len] != ' ') ||
+// 			(info->arr_map[i + info->max_line_len] != '1' &&
+// 			info->arr_map[i + info->max_line_len] != ' '))
+// 			ft_putstr("Error map: map is open\n");
+// 		info->arr_map[i] = '1';
+// 	}
+// 	else if (ft_isalpha(info->arr_map[i]))
+// 	{
+// 		if (info->arr_map[i + 1] == ' ' ||
+// 			info->arr_map[i - 1] == ' ' ||
+// 			info->arr_map[i - info->max_line_len] == ' ' ||
+// 			info->arr_map[i + info->max_line_len] == ' ')
+// 			ft_putstr("Error map: map is open\n");
+// 	}
+// }
+
+// static void			ft_isvalid_last_line(int i, t_map *info)
+// {
+// 	if (info->arr_map[i] != '1' && !(info->arr_map[i] == ' ' &&
+// 		info->arr_map[i - info->max_line_len] == '1'))
+// 		ft_putstr("Error map: map is open\n");
+// 	if (info->arr_map[i] == ' ')
+// 		info->arr_map[i] = '1';
+// }
+
+// static void			ft_check_init_pos_and_color(t_map *info)
+// {
+// 	if (info->pos_pl == 0)
+// 		ft_putstr("Error map: map hasn't position player\n");
+// 	if (info->floor_color == NOCOLOR)
+// 		ft_putstr("Error map: not initialized color of floor\n");
+// 	if (info->ceiling_color == NOCOLOR)
+// 		ft_putstr("Error map: not initialized color of ceiling\n");
+// 	if (info->w == 0 || info->h == 0)
+// 		ft_putstr("Error map: not initialized resolution\n");
+// }
+
+// void				ft_valid_map(t_map *info)
+// {
+// 	unsigned int	i;
+
+// 	ft_check_init_pos_and_color(info);
+// 	i = info->max_line_len;
+// 	while (i < info->max_line_len * 2)
+// 	{
+// 		ft_isvalid_first_line(i, info);
+// 		i++;
+// 	}
+// 	while (i < info->max_line_len * (info->count_line - 1))
+// 	{
+// 		if (info->arr_map[i] != '1')
+// 		{
+// 			ft_isvalid_middle_line(i, info);
+// 			if (info->arr_map[i] == '2')
+// 				info->count_sprites++;
+// 		}
+// 		i++;
+// 	}
+// 	while (i < info->max_line_len * info->count_line)
+// 	{
+// 		ft_isvalid_last_line(i, info);
+// 		i++;
+// 	}
 // }
 
 int check_map(__unused t_game *game)
 {
-    // int x;
-    // int y;
-
-    // x = 0;
-    // y = 0;
-    // while (y < game->map.map_size)
-    // {
-    //     while (game->map.map[y][x] != '\0')
-    //     {
-    //        if (x == ' ')
-    //        {
-    //           x++;
-    //        }
-    //        else if (game->map.map[y][x] == '0')
-    //        {
-    //            check_env(game, x, y);
-    //        }
-           
-           
-    //     }
-        
-    // }
-    // int		i;
-	// int		j;
-
-	// i = 0;
-	// j = 0;
-	// while (i < s->map.y)
-	// {
-	// 	j = 0;
-	// 	while (j < s->map.x)
-	// 	{
-	// 		if (s->map.tab[i][j] != '1' && i == 0)
-	// 			return (-1);
-	// 		else if (s->map.tab[i][j] != '1' && i == s->map.y - 1)
-	// 			return (-1);
-	// 		else if (s->map.tab[i][j] != '1' && j == 0)
-	// 			return (-1);
-	// 		else if (s->map.tab[i][j] != '1' && j == s->map.x - 1)
-	// 			return (-1);
-	// 		j++;
-	// 	}
-	// 	i++;
-	// }
-	return (1);
-
+	return 1;
 }
