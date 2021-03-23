@@ -1,5 +1,5 @@
 #include "cub3d.h"
-#define FOV 0.50
+#define FOV 0.5
 void            my_mlx_pixel_put(t_data data, int x, int y, int color)
 {
     char    *dst;
@@ -43,10 +43,10 @@ void get_pos(t_player *player, t_game *game)
         i++;
         j = 0;
     }
-    (player->direct == 'N') ? player->rotation_angle = M_PI * 3 / 2 : -1;
-    (player->direct == 'S') ? player->rotation_angle = M_PI / 2 : -1 ;
-    (player->direct == 'W') ? player->rotation_angle = M_PI : -1;
-    (player->direct == 'E') ? player->rotation_angle = 0 : -1;
+    // (player->direct == 'N') ? player->rotation_angle = M_PI * 3 / 2 : -1;
+    // (player->direct == 'S') ? player->rotation_angle = M_PI / 2 : -1 ;
+    // (player->direct == 'W') ? player->rotation_angle = M_PI : -1;
+    // (player->direct == 'E') ? player->rotation_angle = 0 : -1;
 }
 
 static void ft_set_pos_player(t_game *game)
