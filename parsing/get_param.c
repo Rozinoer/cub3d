@@ -56,7 +56,6 @@ static int    get_resolution(t_game *game)
         else
             list = list->next;
     }
-    game->param = game->param->next;
     return (0);
 }
 
@@ -69,23 +68,16 @@ static int get_texpack(t_game *game)
     {
         if (check_identifer(list->content, "NO ") == 1)
             game->map.no_tex = list->content + 3;
-        // else
-        //     return (-1);
-        // game->param = game->param->next;
+
         if (check_identifer(list->content, "SO ") == 1)
             game->map.so_tex = list->content + 3;
-        // else
-        //     return (-1);
-        // game->param = game->param->next;
+
         if (check_identifer(list->content, "WE ") == 1)
             game->map.we_tex = list->content + 3;
-        // else
-        //     return (-1);
-        // game->param = game->param->next;
+
         if (check_identifer(list->content, "EA ") == 1)
             game->map.ea_tex = list->content + 3;
-        // else
-        //     return (-1);
+
         list = list->next;
     }
     return (0);
@@ -109,21 +101,21 @@ static int find_params(t_game *game)
 
     tmp = game->param;
     if (find_param(tmp, "R ") != 1)
-        error(-1, 'R', game);
+        ft_error("Error. R param duplicate\n");
     if (find_param(tmp, "NO ") != 1)
-        error(-1, 'T', game);
+        ft_error("Error. Texture param duplicate\n");
     if (find_param(tmp, "SO ") != 1)
-        error(-1, 'T', game);
+        ft_error("Error. Texture param duplicate\n");
     if (find_param(tmp, "WE ") != 1)
-        error(-1, 'T', game);
+        ft_error("Error. Texture param duplicate\n");
     if (find_param(tmp, "EA ") != 1)
-        error(-1, 'T', game);
+        ft_error("Error. Texture param duplicate\n");
     if (find_param(tmp, "S ") != 1)
-        error(-1, 'S', game);
+        ft_error("Error. Sprite param duplicate\n");
     if (find_param(tmp, "F ") != 1)
-        error(-1, 'F', game);
+        ft_error("Error. Floor param duplicate\n");
     if (find_param(tmp, "C ") != 1)
-        error(-1, 'C', game);
+        ft_error("Error. Ceiling param duplicate\n");
     return (1);
 }
 
@@ -131,6 +123,11 @@ void    get_param(t_game *game)
 {
     find_params(game);
     error(get_resolution(game), 'R', game);
+    if (game->mlx.win_width > game->mlx.monitor_width || game->mlx.win_hight > game->mlx.monitor_hight)
+    {
+        game->mlx.win_width = game->mlx.monitor_width;
+        game->mlx.win_hight = game->mlx.monitor_hight;
+    }
     error(get_texpack(game), 'T', game);
     error(get_sprite_tex(game), 'S', game);
     error(get_floor_color(game), 'F', game);

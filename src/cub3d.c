@@ -41,7 +41,6 @@ int main(__unused int args, char **argv)
 
     if (args == 2 || args == 3)
     {
-        //TODO: проверить *.cub
         check_expansion(argv[1]);
         game.mlx.file = argv[1];
         init_struct(&game);

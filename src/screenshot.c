@@ -53,5 +53,6 @@ int     screenshot(t_game *game)
 {
 	ft_create_bmp(game);
 	mlx_destroy_image(game->mlx.mlx, game->data.img);
+    mlx_destroy_window(game->mlx.mlx, game->mlx.mlx_win);
 	exit(0);
 }
