@@ -26,8 +26,7 @@ static int get_map(t_game *game)
 		game->map.map[++i] = tmp->content;
 		tmp = tmp->next;
 	}
-    if(check_map(game) != 1)
-        return (-1);
+    check_map(game);
     return (0);
 }
 

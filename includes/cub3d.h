@@ -116,4 +116,5 @@ void    init_struct(t_game *game);
 int     check_map(t_game *game);
 void    drow_line(t_data data, int x, int startY, int endY, int color);
 int     screenshot(t_game *game);
+void    ft_error(char *str);
 #endif

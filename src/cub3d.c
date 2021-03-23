@@ -25,9 +25,14 @@ int update(t_game *game)
     return (0);
 }
 
-static int check_expansion(char *str)
+static void check_expansion(char *str)
 {
-    
+    int len;
+
+    len = ft_strlen(str);
+    str = str + (len - 4);
+    if (ft_strncmp(str, ".cub", 4) != 0)
+        ft_error("Error. Map file haves bad expansion\n");
 }
 
 int main(__unused int args, char **argv)
@@ -37,6 +42,7 @@ int main(__unused int args, char **argv)
     if (args == 2 || args == 3)
     {
         //TODO: проверить *.cub
+        check_expansion(argv[1]);
         game.mlx.file = argv[1];
         init_struct(&game);
         if (args == 3 && (ft_strncmp(argv[2], "--save", 6) == 0))

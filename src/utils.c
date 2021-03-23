@@ -36,6 +36,7 @@ void get_pos(t_player *player, t_game *game)
                 player->direct = game->map.map[i][j];
                 player->posX = j;
                 player->posY = i;
+                break;
             }
             j++;
         }
@@ -84,7 +85,6 @@ void init_struct(t_game *game)
 
     mlx_get_screen_size(&game->mlx.monitor_width, &game->mlx.monitor_hight);
     parser(game, game->mlx.file);
-    get_pos(&player, game);
     get_pos(&player, game);
     game->player = player;
     ft_set_pos_player(game);

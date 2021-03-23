@@ -1,23 +1,23 @@
 #include "cub3d.h"
 
-// static	void collusion(t_game *game, int rotSpeed, int flag)
+// static	void collusion(t_game *game, int move_speed, int flag)
 // {
 // 	if (flag == 1)
 // 	{
-// 		if (game->map.map[(int)(game->player.posY + game->player.dirY * rotSpeed)]
-// 		[(int)(game->player.posX + game->player.dirX * rotSpeed)] != '1')
+// 		if (game->map.map[(int)(game->player.posY + game->player.dirY * move_speed)]
+// 		[(int)(game->player.posX + game->player.dirX * move_speed)] != '1')
 // 		{
-// 			game->player.posX += game->player.dirX * rotSpeed;
-//       		game->player.posY += game->player.dirY * rotSpeed;
+// 			game->player.posX += game->player.dirX * move_speed;
+//       		game->player.posY += game->player.dirY * move_speed;
 // 		}
 // 	}
 // 	else
 // 	{
-// 		if (game->map.map[(int)(game->player.posY + game->player.dirY * rotSpeed)]
-// 		[(int)(game->player.posX - game->player.dirX * rotSpeed)] != '1')
+// 		if (game->map.map[(int)(game->player.posY + game->player.dirY * move_speed)]
+// 		[(int)(game->player.posX - game->player.dirX * move_speed)] != '1')
 // 		{
-// 			game->player.posY -= -game->player.dirX * rotSpeed;
-// 			game->player.posX -= game->player.dirY * rotSpeed;
+// 			game->player.posY -= -game->player.dirX * move_speed;
+// 			game->player.posX -= game->player.dirY * move_speed;
 // 		}
 // 	}
 // }
@@ -43,7 +43,7 @@ static void another_key(int keycode, t_game *game, double oldDirX, double oldPla
 
 int key_pressed(int keycode, t_game *game)
 {
-	double rotSpeed;
+	double move_speed;
 	double oldDirX;
 	double oldPlaneX;
 	double smooth;
@@ -51,40 +51,40 @@ int key_pressed(int keycode, t_game *game)
 	smooth = 0.4;
 	oldDirX = game->player.dirX;
 	oldPlaneX = game->player.planeX;
-	rotSpeed = 0.1;
+	move_speed = 0.1;
 	if (keycode == W || keycode == S)
     {
 		if (keycode == S)
 		{
-			rotSpeed *= -1;
+			move_speed *= -1;
 			smooth *= -1;
 		}
-		// collusion(game, rotSpeed, 1);
-		if (game->map.map[(int)(game->player.posY + game->player.dirY * (rotSpeed + smooth))]
-		[(int)(game->player.posX + game->player.dirX * (rotSpeed + smooth))] != '1')
+		// collusion(game, move_speed, 1);
+		if (game->map.map[(int)(game->player.posY + game->player.dirY * (move_speed + smooth))]
+		[(int)(game->player.posX + game->player.dirX * (move_speed + smooth))] != '1')
 		{
-			game->player.posX += game->player.dirX * rotSpeed;
-      		game->player.posY += game->player.dirY * rotSpeed;
+			game->player.posX += game->player.dirX * move_speed;
+      		game->player.posY += game->player.dirY * move_speed;
 		}
-		// game->player.posX += game->player.dirX * rotSpeed;
-      	// game->player.posY += game->player.dirY * rotSpeed;
+		// game->player.posX += game->player.dirX * move_speed;
+      	// game->player.posY += game->player.dirY * move_speed;
     }
     if (keycode == A || keycode == D)
     {
 		if (keycode == A)
 		{
-			rotSpeed *= -1;
+			move_speed *= -1;
 			smooth *= -1;
 		}
-		// collusion(game, rotSpeed, 2);
-		if (game->map.map[(int)(game->player.posY + game->player.dirY * (rotSpeed + smooth))]
-		[(int)(game->player.posX - game->player.dirX * (rotSpeed + smooth))] != '1')
+		// collusion(game, move_speed, 2);
+		if (game->map.map[(int)(game->player.posY + game->player.dirY * (move_speed + smooth))]
+		[(int)(game->player.posX - game->player.dirX * (move_speed + smooth))] != '1')
 		{
-			game->player.posY -= -game->player.dirX * rotSpeed;
-			game->player.posX -= game->player.dirY * rotSpeed;
+			game->player.posY -= -game->player.dirX * move_speed;
+			game->player.posX -= game->player.dirY * move_speed;
 		}
-		// game->player.posY -= -game->player.dirX * rotSpeed;
-		// game->player.posX -= game->player.dirY * rotSpeed;
+		// game->player.posY -= -game->player.dirX * move_speed;
+		// game->player.posX -= game->player.dirY * move_speed;
     }
     else if (keycode == 124 || keycode == 123 || keycode == 53)
 		another_key(keycode, game, oldDirX, oldPlaneX);

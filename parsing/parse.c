@@ -8,7 +8,8 @@ void parser(t_game *game, char *str)
 	t_list *param;
 
     path = str;
-	fd = open(path, O_RDONLY);
+	if((fd = open(path, O_RDONLY)) == -1)
+		ft_error("Error. Path to the map file is invalid1\n");
 	line = NULL;
 	param = NULL;
 
