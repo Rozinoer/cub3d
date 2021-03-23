@@ -1,5 +1,5 @@
 #include "cub3d.h"
-#define FOV 0.66
+#define FOV 0.50
 void            my_mlx_pixel_put(t_data data, int x, int y, int color)
 {
     char    *dst;
