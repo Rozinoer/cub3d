@@ -47,7 +47,7 @@ int main(__unused int args, char **argv)
         if (args == 3 && (ft_strncmp(argv[2], "--save", 6) == 0))
 			game.save = 1;
 		else if (args == 3)
-			ft_putstr("Error arg 2 is not correct\n");
+			ft_error("Error arg 2 is not correct\n");
 		else
 			game.save = 0;
         mlx_loop_hook(game.mlx.mlx, update, &game);

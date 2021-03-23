@@ -15,8 +15,14 @@ static void check_env(t_game *game)
 			game->map.map[y][x] == 'N' || game->map.map[y][x] == 'S' ||
 			game->map.map[y][x] == 'E' || game->map.map[y][x] == 'W')
 			{
-				if (game->map.map[y][x + 1] == ' ' || game->map.map[y][x - 1] == ' ' 
-				|| game->map.map[y + 1][x] == ' ' || game->map.map[y - 1][x] == ' ')
+				if(game->map.map[y][x + 1] && game->map.map[y][x - 1] 
+					&& game->map.map[y + 1][x] && game->map.map[y - 1][x])
+				{
+					if (game->map.map[y][x + 1] == ' ' || game->map.map[y][x - 1] == ' ' 
+					|| game->map.map[y + 1][x] == ' ' || game->map.map[y - 1][x] == ' ')
+						ft_error("Error. Map is unclosed!\n");
+				}
+				else
 					ft_error("Error. Map is unclosed!\n");
 			}
 			x++;
