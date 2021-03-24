@@ -14,13 +14,14 @@ int update(t_game *game)
 {
     mlx_destroy_image(game->mlx.mlx, game->data.img);
     game->data.img = mlx_new_image(game->mlx.mlx, game->mlx.win_width, game->mlx.win_hight);
-    game->data.addr = mlx_get_data_addr(game->data.img, &game->data.bits_per_pixel, &game->data.line_length,&game->data.endian);
-
-
+    game->data.addr = mlx_get_data_addr(game->data.img, 
+    &game->data.bits_per_pixel, &game->data.line_length,&game->data.endian);
     mlx_hook(game->mlx.mlx_win, 2, 1L<<0, key_pressed, game);
-    render_next_frame(game);
     if (game->save == 1)
+    {
+        render_next_frame(game);
         screenshot(game);
+    }
     
     return (0);
 }
@@ -35,7 +36,7 @@ static void check_expansion(char *str)
         ft_error("Error. Map file haves bad expansion\n");
 }
 
-int main(__unused int args, char **argv)
+int main(int args, char **argv)
 {
     t_game game;
 
@@ -43,13 +44,14 @@ int main(__unused int args, char **argv)
     {
         check_expansion(argv[1]);
         game.mlx.file = argv[1];
-        init_struct(&game);
         if (args == 3 && (ft_strncmp(argv[2], "--save", 6) == 0))
 			game.save = 1;
 		else if (args == 3)
 			ft_error("Error arg 2 is not correct\n");
 		else
 			game.save = 0;
+        init_struct(&game);
+        render_next_frame(&game);
         mlx_loop_hook(game.mlx.mlx, update, &game);
         mlx_loop(game.mlx.mlx);
     }

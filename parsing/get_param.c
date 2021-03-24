@@ -101,21 +101,21 @@ static int find_params(t_game *game)
 
     tmp = game->param;
     if (find_param(tmp, "R ") != 1)
-        ft_error("Error. R param duplicate\n");
+        ft_error("Error. R param duplicate or not found\n");
     if (find_param(tmp, "NO ") != 1)
-        ft_error("Error. Texture param duplicate\n");
+        ft_error("Error. Texture param duplicate or not found\n");
     if (find_param(tmp, "SO ") != 1)
-        ft_error("Error. Texture param duplicate\n");
+        ft_error("Error. Texture param duplicate or not found\n");
     if (find_param(tmp, "WE ") != 1)
-        ft_error("Error. Texture param duplicate\n");
+        ft_error("Error. Texture param duplicate or not found\n");
     if (find_param(tmp, "EA ") != 1)
-        ft_error("Error. Texture param duplicate\n");
+        ft_error("Error. Texture param duplicate or not found\n");
     if (find_param(tmp, "S ") != 1)
-        ft_error("Error. Sprite param duplicate\n");
+        ft_error("Error. Sprite param duplicate or not found\n");
     if (find_param(tmp, "F ") != 1)
-        ft_error("Error. Floor param duplicate\n");
+        ft_error("Error. Floor param duplicate or not found\n");
     if (find_param(tmp, "C ") != 1)
-        ft_error("Error. Ceiling param duplicate\n");
+        ft_error("Error. Ceiling param duplicate or not found\n");
     return (1);
 }
 

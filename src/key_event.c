@@ -18,6 +18,7 @@ static void another_key(int keycode, t_game *game, double oldDirX, double oldPla
 	game->player.dirY = oldDirX * sin(rotSpeed) + game->player.dirY * cos(rotSpeed);
 	game->player.planeX = game->player.planeX * cos(rotSpeed) - game->player.planeY * sin(rotSpeed);
 	game->player.planeY = oldPlaneX * sin(rotSpeed) + game->player.planeY * cos(rotSpeed);
+	render_next_frame(game);
 }
 
 int key_pressed(int keycode, t_game *game)
@@ -44,6 +45,7 @@ int key_pressed(int keycode, t_game *game)
 			game->player.posX += game->player.dirX * move_speed;
 	  		game->player.posY += game->player.dirY * move_speed;
 		}
+		render_next_frame(game);
 	}
 	if (keycode == A || keycode == D)
 	{
@@ -58,6 +60,7 @@ int key_pressed(int keycode, t_game *game)
 			game->player.posY -= -game->player.dirX * move_speed;
 			game->player.posX -= game->player.dirY * move_speed;
 		}
+		render_next_frame(game);
 	}
 	else if (keycode == 124 || keycode == 123 || keycode == 53)
 		another_key(keycode, game, oldDirX, oldPlaneX);
