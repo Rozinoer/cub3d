@@ -2,13 +2,13 @@
 
 static int create_rgb(int r, int g, int b)
 {
-    if (r >= 0 && r <= 255 && g >= 0 && g <= 255 && b >= 0 && b <= 255 )
+    if (r >= 0 && r <= 255 && g >= 0 && g <= 255 && b >= 0 && b <= 255)
         return(r << 16 | g << 8 | b);
     else
         return(-1);
 }
 
-static char *skip(char *str, char c, t_game *game, int flag)
+static char *skip(char *str, int flag)
 {
     if (flag == 0)
     {
@@ -21,7 +21,7 @@ static char *skip(char *str, char c, t_game *game, int flag)
             str++;
     }
     if (*str < '0' || *str > '9')
-        error(-1, c, game);
+        ft_error("Error. Bad symbols in color declaration!\n");
     return (str);
 }
 
@@ -33,12 +33,12 @@ int check_color(char *str, t_game *game, char c)
     int color;
 
     color = -1;
-    r = ft_atoi(str = skip(str, c, game, 1));
+    r = ft_atoi(str = skip(str, 1));
     str += ft_nbrlen(r);
-    g = ft_atoi(str = skip(str, c, game, 0));
+    g = ft_atoi(str = skip(str, 0));
     str += ft_nbrlen(g);
-    b = ft_atoi(str = skip(str, c, game, 0));
-    skip(str, c, game, 1);
+    b = ft_atoi(str = skip(str, 0));
+    skip(str, 1);
     color = create_rgb(r, g, b);
     if (color != -1 && c == 'F')
         game->map.floor_color = color;

@@ -53,29 +53,6 @@ static void dda_perform(t_game *game, double rayDirX, double rayDirY)
     game->ray.lineHeight = (int)(game->mlx.win_width / game->player.to_wall);
 }
 
-t_data		*ft_create_img_txtr(char *file, void *ptr_mlx)
-{
-	t_data	*txtr;
-
-	if (!(txtr = malloc(sizeof(t_data))))
-		ft_error("Error memory allocation\n");
-	txtr->img = mlx_xpm_file_to_image(ptr_mlx, file, \
-							&txtr->width, &txtr->height);
-	if (!txtr->img)
-		ft_error("Error map: error texture\n");
-	txtr->addr = mlx_get_data_addr(txtr->img, &txtr->bits_per_pixel, \
-							&txtr->line_length, &txtr->endian);
-	return (txtr);
-}
-
-void		ft_paint_texture(t_game *game)
-{
-	game->txtr.wall_n = ft_create_img_txtr(game->map.no_tex, game->mlx.mlx);
-	game->txtr.wall_s = ft_create_img_txtr(game->map.so_tex, game->mlx.mlx);
-	game->txtr.wall_e = ft_create_img_txtr(game->map.ea_tex, game->mlx.mlx);
-	game->txtr.wall_w = ft_create_img_txtr(game->map.we_tex, game->mlx.mlx);
-}
-
 int			ft_get_pxl_clr(t_data *txtr, int x, int y)
 {
 	int		*ptr;
@@ -93,7 +70,6 @@ void print_ray(t_game *game)
     double cameraX;
     double rayDirX;
     double rayDirY;
-    ft_paint_texture(game);
     x = 0;
     while (x < game->mlx.win_width)
     {
@@ -116,8 +92,7 @@ void print_ray(t_game *game)
         game->ray.drawEnd = game->ray.lineHeight / 2 + game->mlx.win_hight / 2;
         if(game->ray.drawEnd >= game->mlx.win_hight)
             game->ray.drawEnd = game->mlx.win_hight - 1;
-////////////////
-        // int texNum = game->map.map[game->ray.mapY][game->ray.mapX] - 48;
+
         double wallX;
         if (game->player.side == 0)
             wallX = game->player.posY + game->player.to_wall * game->player.dirY;
