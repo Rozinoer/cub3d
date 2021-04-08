@@ -85,7 +85,9 @@ static int get_texpack(t_game *game)
 
 static int find_param(t_list *tmp, char *str)
 {
-    int i = 0;
+    int i;
+    
+    i = 0;
     while (tmp->next)
     {
         if (check_identifer(tmp->content, str) == 1)
@@ -123,7 +125,8 @@ void    get_param(t_game *game)
 {
     find_params(game);
     error(get_resolution(game), 'R', game);
-    if (game->mlx.win_width > game->mlx.monitor_width || game->mlx.win_hight > game->mlx.monitor_hight)
+    if (game->mlx.win_width > game->mlx.monitor_width 
+    || game->mlx.win_hight > game->mlx.monitor_hight)
     {
         game->mlx.win_width = game->mlx.monitor_width;
         game->mlx.win_hight = game->mlx.monitor_hight;

@@ -53,13 +53,47 @@ static void dda_perform(t_game *game, double rayDirX, double rayDirY)
     game->ray.lineHeight = (int)(game->mlx.win_width / game->player.to_wall);
 }
 
+t_data		*ft_create_img_txtr(char *file, void *ptr_mlx)
+{
+	t_data	*txtr;
+
+	if (!(txtr = malloc(sizeof(t_data))))
+		ft_error("Error memory allocation\n");
+	txtr->img = mlx_xpm_file_to_image(ptr_mlx, file, \
+							&txtr->width, &txtr->height);
+	if (!txtr->img)
+		ft_error("Error map: error texture\n");
+	txtr->addr = mlx_get_data_addr(txtr->img, &txtr->bits_per_pixel, \
+							&txtr->line_length, &txtr->endian);
+	return (txtr);
+}
+
+void		ft_paint_texture(t_game *game)
+{
+	game->txtr.wall_n = ft_create_img_txtr(game->map.no_tex, game->mlx.mlx);
+	game->txtr.wall_s = ft_create_img_txtr(game->map.so_tex, game->mlx.mlx);
+	game->txtr.wall_e = ft_create_img_txtr(game->map.ea_tex, game->mlx.mlx);
+	game->txtr.wall_w = ft_create_img_txtr(game->map.we_tex, game->mlx.mlx);
+}
+
+int			ft_get_pxl_clr(t_data *txtr, int x, int y)
+{
+	int		*ptr;
+	int		color;
+
+	ptr = (void *)txtr->addr + (y * txtr->line_length + x * \
+												(txtr->bits_per_pixel / 8));
+	color = *(int*)ptr;
+	return (color);
+}
+
 void print_ray(t_game *game)
 {
     int x;
     double cameraX;
     double rayDirX;
     double rayDirY;
-
+    ft_paint_texture(game);
     x = 0;
     while (x < game->mlx.win_width)
     {
@@ -82,25 +116,28 @@ void print_ray(t_game *game)
         game->ray.drawEnd = game->ray.lineHeight / 2 + game->mlx.win_hight / 2;
         if(game->ray.drawEnd >= game->mlx.win_hight)
             game->ray.drawEnd = game->mlx.win_hight - 1;
-        //choose wall color
-        int color = 0xFFFFFF;
-        int red_color = 0xff3333;
-        int green_color = 0x339933;
-        int blue_color = 0x3366cc;
-        int yellow_color = 0xffff55;
-        if (game->map.map[game->ray.mapY][game->ray.mapX] == '1')
-            color = red_color;
-        if (game->map.map[game->ray.mapY][game->ray.mapX] == '2')
-            color = green_color;
-        if (game->map.map[game->ray.mapY][game->ray.mapX] == '3')
-            color = blue_color;
-        if (game->map.map[game->ray.mapY][game->ray.mapX] == '4')
-            color = 0xFFFFFF; 
-        if (game->map.map[game->ray.mapY][game->ray.mapX] == '5')
-            color = yellow_color; 
-        if (game->player.side == 1) 
-            color = color / 1.5;        
-        drow_line(game->data, x, game->ray.drawStart, game->ray.drawEnd, color);
+////////////////
+        // int texNum = game->map.map[game->ray.mapY][game->ray.mapX] - 48;
+        double wallX;
+        if (game->player.side == 0)
+            wallX = game->player.posY + game->player.to_wall * game->player.dirY;
+        else
+            wallX = game->player.posX + game->player.to_wall * game->player.dirX;
+        wallX -= floor(wallX);
+        int texX = (int)(wallX * (double)texWidth);
+        double step = 1.0 * texHeight / game->ray.lineHeight;
+        // Starting texture coordinate
+        double texPos = (game->ray.drawStart - game->mlx.win_hight / 2 + game->ray.lineHeight / 2) * step;
+        for (int y = game->ray.drawStart; y < game->ray.drawEnd; y++)
+        {
+            // Cast the texture coordinate to integer, and mask with (texHeight - 1) in case of overflow
+            int texY = (int)texPos & (texHeight - 1);
+            texPos += step;
+            int color = ft_get_pxl_clr(game->txtr.wall_n, texX, texY);
+		    if ((color & 0x00FFFFFF) == 0)
+			    color = 0x00111111;
+            my_mlx_pixel_put(game->data, x, y, color);
+        }
         x++;
     }
 }

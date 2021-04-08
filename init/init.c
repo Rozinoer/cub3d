@@ -66,6 +66,26 @@ static int init_window(t_game *game)
 
 static int init(t_game *game)
 {
+    for (int i = 0; i < 8; i++)
+        for (int j = 0; j < texHeight * texWidth; j++)
+            game->texture[i][j] = 0;
+    for (int y = 0; y < texWidth; y++)
+    {
+        for (int x = 0; x < texHeight; x++)
+        {
+            int xorcolor = (x * 256 / texWidth) ^ (y * 256 / texHeight);
+            int ycolor = y * 256 / texHeight;
+            int xycolor = y * 128 / texHeight + x * 128 / texWidth;
+            game->texture[5][texWidth * y + x] = 65536 * 254 * (x != y && x != texWidth - y); //flat red texture with black cross
+            game->texture[0][texWidth * y + x] = xycolor + 256 * xycolor + 65536 * xycolor; //sloped greyscale
+            game->texture[4][texWidth * y + x] = 256 * xycolor + 65536 * xycolor; //sloped yellow gradient
+            game->texture[3][texWidth * y + x] = xorcolor + 256 * xorcolor + 65536 * xorcolor; //xor greyscale
+            game->texture[2][texWidth * y + x] = 256 * xorcolor; //xor green
+            game->texture[1][texWidth * y + x] = 65536 * 192 * (x % 16 && y % 16); //red bricks
+            game->texture[6][texWidth * y + x] = 65536 * ycolor; //red gradient
+            game->texture[7][texWidth * y + x] = 128 + 256 * 128 + 65536 * 128; //flat grey texture
+        }
+    }
     init_window(game);
     return (0);
 }

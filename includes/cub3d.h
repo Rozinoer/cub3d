@@ -14,7 +14,8 @@
 # define S 1
 # define D 2
 # define A 0
-
+# define texHeight 64
+#define texWidth 64
 
 typedef struct  s_data {
     void        *img;
@@ -22,6 +23,12 @@ typedef struct  s_data {
     int         bits_per_pixel;
     int         line_length;
     int         endian;
+    int         height;
+    int         width;
+    double			step;
+	double			pos;
+	int				x;
+	int				y;
 }               t_data;
 
 typedef struct s_ray
@@ -68,6 +75,14 @@ typedef struct s_map
     char *sprite_tex;
 }               t_map;
 
+typedef struct s_texture
+{
+    t_data *wall_n;
+    t_data *wall_s;
+    t_data *wall_w;
+    t_data *wall_e;
+}               t_texture;
+
 typedef struct s_mlx
 {
     void    *mlx;
@@ -82,13 +97,17 @@ typedef struct s_mlx
 typedef struct s_game
 {
     t_mlx       mlx;
+    t_texture   txtr;
     t_map       map;
     t_list      *param;
     t_list      *pointer;
     t_player    player;
     t_data      data;
-    t_ray      ray;
+    t_ray       ray;
     int         save;
+
+    int         **buf;
+    int         texture[8][texHeight * texWidth];
 }               t_game;
 
 void    parser(t_game *game, char *str);

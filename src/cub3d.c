@@ -3,6 +3,15 @@
 
 int render_next_frame(t_game *game)
 {
+    // for (size_t i = 0; i < 64; i++)
+    // {
+    //     for (size_t j = 0; j < 64; j++)
+    //     {
+    //         my_mlx_pixel_put(game->data,j,i,game->texture[4][i * 64 + j]);
+    //     }
+        
+    // }
+    
     print_back(game);
     print_ray(game);
 

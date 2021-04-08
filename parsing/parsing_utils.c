@@ -56,7 +56,6 @@ int check_identifer(char *str, char *iden)
 
     i = ft_strlen(iden);
     j = 0;
-    
     while (j <= i && iden[j] != '\0')
     {
         if(str[j] != iden[j])
