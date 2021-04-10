@@ -17,6 +17,25 @@
 # define texHeight 64
 #define texWidth 64
 
+typedef struct		s_sprt {
+	double			x;
+	double			y;
+	double			inv_det;
+	double			transform_x;
+	double			transform_y;
+	int				sprite_screen_x;
+	int				sprite_height;
+	int				draw_start_y;
+	int				draw_end_y;
+	int				sprite_width;
+	int				draw_start_x;
+	int				draw_end_x;
+	int				txtr_x;
+	int				txtr_y;
+	int				color;
+	int				d;
+}					t_sprt;
+
 typedef struct  s_data {
 	void        *img;
 	char        *addr;
@@ -46,8 +65,10 @@ typedef struct s_ray
 
 typedef struct s_player
 {
-	float       posX ;
+	float       posX;
 	float       posY;
+	float       oldX;
+	float       oldY;
 	double      sideDistX;
 	double      sideDistY;
 	double      rotation_angle ;
@@ -83,6 +104,7 @@ typedef struct s_texture
 	t_data *wall_e;
 	t_data *sprite;
 	t_data *current;
+	int color;
 	int				texX;
 	int				texY;
 	double			wallX;
@@ -111,6 +133,7 @@ typedef struct s_game
 	t_player    player;
 	t_data      data;
 	t_ray       ray;
+	t_sprt		sprite;
 	int         save;
 }               t_game;
 
