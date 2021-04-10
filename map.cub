@@ -6,7 +6,7 @@ EA ./textures/wood.xpm
 
 WE ./textures/wood.xpm
 
-S ./textures/barrel.xpm
+S ./textures/donuts.xpm
 F 034,100, 200
 C 125,30,32
 

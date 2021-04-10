@@ -55,7 +55,6 @@ void static get_param(t_game *game)
         game->mlx.win_hight = game->mlx.monitor_hight;
     }
     get_texpack(game);
-    get_sprite_tex(game);
     get_floor_color(game);
     get_ceiling_color(game);
     get_map(game);

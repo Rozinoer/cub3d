@@ -1,27 +1,5 @@
 #include "cub3d.h"
 
-void print_back(t_game *game)
-{
-    int x;
-    int y;
-
-    x = 0;
-    y = 0;
-    while (x != game->mlx.win_width)
-    {
-        while (y != game->mlx.win_hight)
-        {
-            if (y <= game->mlx.win_hight * 0.5)
-                my_mlx_pixel_put(game->data, x, y, game->map.ceiling_color);
-            else
-                my_mlx_pixel_put(game->data, x, y, game->map.floor_color);
-            y++;    
-        }
-        x++;
-        y = 0;
-    }
-}
-
 static int    rect(t_game *game, int main_x, int main_y, char c)
 {
 	int x;

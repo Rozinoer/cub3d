@@ -37,17 +37,3 @@ int get_ceiling_color(t_game *game)
     }
     return (i);
 }
-
-int get_sprite_tex(t_game *game)
-{
-    t_list *list;
-
-    list = game->param;
-    while (list->next)
-    {
-        if (check_identifer(list->content, "S "))
-            game->map.sprite_tex = list->content + 2;
-        list = list->next;
-    }
-    return (0);
-}

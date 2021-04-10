@@ -38,6 +38,7 @@ RENDER_DIR =	render/
 
 RENDER_LIST = 	render_map.c \
 				render_player.c \
+				render_utils.c \
 
 SRC = $(addprefix $(SRC_DIR), $(SRC_LIST))
 

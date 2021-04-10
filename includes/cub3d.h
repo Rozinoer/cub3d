@@ -81,6 +81,13 @@ typedef struct s_texture
 	t_data *wall_s;
 	t_data *wall_w;
 	t_data *wall_e;
+	t_data *sprite;
+	t_data *current;
+	int				texX;
+	int				texY;
+	double			wallX;
+	double step;
+	double texPos;
 }               t_texture;
 
 typedef struct s_mlx
@@ -105,9 +112,6 @@ typedef struct s_game
 	t_data      data;
 	t_ray       ray;
 	int         save;
-
-	int         **buf;
-	int         texture[8][texHeight * texWidth];
 }               t_game;
 
 void    parser(t_game *game, char *str);
@@ -122,7 +126,6 @@ void    print_ray(t_game *game);
 void    print_back(t_game *game);
 int     check_identifer(char *str, char *iden);
 int     check_map(t_game *game);
-int     get_sprite_tex(t_game *game);
 int     check_color(char *str, t_game *game, char c);
 int     get_floor_color(t_game *game);
 int     get_ceiling_color(t_game *game);
@@ -135,4 +138,5 @@ void    ft_error(char *str);
 int     get_texpack(t_game *game);
 int     get_resolution(t_game *game);
 int     get_map(t_game *game);
+int			ft_get_pxl_clr(t_data *txtr, int x, int y);
 #endif

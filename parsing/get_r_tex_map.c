@@ -77,6 +77,8 @@ int get_texpack(t_game *game)
 
         if (check_identifer(list->content, "EA ") == 1)
             game->map.ea_tex = list->content + 3;
+        if (check_identifer(list->content, "S ") == 1)
+            game->map.sprite_tex = list->content + 2;
 
         list = list->next;
     }

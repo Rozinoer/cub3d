@@ -62,6 +62,7 @@ static t_data		*ft_create_img_txtr(char *file, void *ptr_mlx)
 {
 	t_data	*txtr;
 
+    printf("%s\n",file);
 	if (!(txtr = malloc(sizeof(t_data))))
 		ft_error("Error memory allocation\n");
 	txtr->img = mlx_xpm_file_to_image(ptr_mlx, file, \
@@ -81,6 +82,7 @@ static int init(t_game *game)
 	game->txtr.wall_s = ft_create_img_txtr(game->map.so_tex, game->mlx.mlx);
 	game->txtr.wall_e = ft_create_img_txtr(game->map.ea_tex, game->mlx.mlx);
 	game->txtr.wall_w = ft_create_img_txtr(game->map.we_tex, game->mlx.mlx);
+    game->txtr.sprite = ft_create_img_txtr(game->map.sprite_tex, game->mlx.mlx);
     return (0);
 }
 
