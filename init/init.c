@@ -62,7 +62,6 @@ static t_data		*ft_create_img_txtr(char *file, void *ptr_mlx)
 {
 	t_data	*txtr;
 
-    printf("%s\n",file);
 	if (!(txtr = malloc(sizeof(t_data))))
 		ft_error("Error memory allocation\n");
 	txtr->img = mlx_xpm_file_to_image(ptr_mlx, file, \

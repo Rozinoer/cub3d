@@ -24,12 +24,14 @@ static void side_step(t_game *game, double rayDirX, double rayDirY)
 	}
 }
 
-static void choose_textr(t_game *game, double rayDirX, double rayDirY)
+static void choose_textr(t_game *game, double rayDirX, double rayDirY, int x)
 {
 	if(game->player.side == 0)
 		game->player.to_wall = (game->ray.mapX - game->player.posX + (1 - game->ray.stepX) / 2) / rayDirX;
 	else
 		game->player.to_wall = (game->ray.mapY - game->player.posY + (1 - game->ray.stepY) / 2) / rayDirY;
+	if (game->sprites.amount_sprt > 0)
+		game->z_buff[x] = game->player.to_wall;
 	game->ray.lineHeight = (int)(game->mlx.win_width / game->player.to_wall);
 	if (game->player.side == 1 && game->ray.stepY < 0)
 		game->txtr.current = game->txtr.wall_n;
@@ -39,9 +41,11 @@ static void choose_textr(t_game *game, double rayDirX, double rayDirY)
 		game->txtr.current = game->txtr.wall_e;
 	else if (game->player.side == 0 && game->ray.stepX > 0)
 		game->txtr.current = game->txtr.wall_w;
+	if (game->map.map[game->ray.mapY][game->ray.mapX] == '2')
+		game->txtr.current = game->txtr.sprite;
 }
 
-static void dda_perform(t_game *game, double rayDirX, double rayDirY)
+static void dda_perform(t_game *game, double rayDirX, double rayDirY, int x)
 {
 	int hit;
 
@@ -63,7 +67,7 @@ static void dda_perform(t_game *game, double rayDirX, double rayDirY)
 		if(game->map.map[game->ray.mapY][game->ray.mapX] == '1')
 			hit = 1;
 	}
-	choose_textr(game, rayDirX, rayDirY);
+	choose_textr(game, rayDirX, rayDirY, x);
 }
 
 static void calculate_txtr_pos(t_game *game, int x, double rayDirX, double rayDirY)
@@ -91,7 +95,6 @@ static void calculate_txtr_pos(t_game *game, int x, double rayDirX, double rayDi
 		my_mlx_pixel_put(game->data, x, game->ray.drawStart, game->txtr.color);
 		game->ray.drawStart++;
 	}
-	//TODO: вызов функции для отрисовки спрайта 
 }
 
 void print_ray(t_game *game)
@@ -115,8 +118,28 @@ void print_ray(t_game *game)
 		game->ray.deltaDistY = fabs(1 / rayDirY);
 
 		side_step(game, rayDirX, rayDirY);
-		dda_perform(game, rayDirX, rayDirY);
+		dda_perform(game, rayDirX, rayDirY, x);
 		calculate_txtr_pos(game, x, rayDirX, rayDirY);
 		x++;
+	}
+	t_sprt_pos *tmp = game->sprt_pos;
+	if (game->sprites.amount_sprt > 0)
+	{
+		init_sprite(game);
+		while (game->sprt_pos->next != NULL)
+		{
+			ft_calc_spr(game->sprt_pos, game->player, game);
+			if (game->sprites.draw_start_x >= game->sprites.draw_end_x)
+				game->sprt_pos = game->sprt_pos->next;
+			else
+			{
+				ft_draw_spr(game, game->txtr.sprite->width, game->txtr.sprite->height);
+				game->sprt_pos = game->sprt_pos->next;
+			}
+		}
+		ft_calc_spr(game->sprt_pos, game->player, game);
+		if (game->sprites.draw_start_x < game->sprites.draw_end_x)
+			ft_draw_spr(game, game->txtr.sprite->width, game->txtr.sprite->height);
+		game->sprt_pos = tmp;
 	}
 }

@@ -32,3 +32,40 @@ void print_back(t_game *game)
         y = 0;
     }
 }
+
+t_sprt_pos		*sprt_pos_new(int x, int y, int index)
+{
+	t_sprt_pos *new;
+
+	if (!(new = (t_sprt_pos *)malloc(sizeof(t_sprt_pos))))
+		return (NULL);
+	if (x < 0)
+		new->x = -1;
+    else
+        new->x = x;
+    if (y < 0)
+		new->y = -1;
+    else
+        new->y = y;
+    new->index = index;
+	new->next = NULL;
+	return (new);
+}
+
+void	sprt_pos_add_back(t_sprt_pos **lst, t_sprt_pos *new)
+{
+	t_sprt_pos	*tmp;
+
+	if (lst != NULL)
+	{
+		tmp = *lst;
+		if (*lst == NULL)
+			*lst = new;
+		else
+		{
+			while (tmp->next)
+				tmp = tmp->next;
+			tmp->next = new;
+		}
+	}
+}

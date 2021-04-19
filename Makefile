@@ -39,6 +39,7 @@ RENDER_DIR =	render/
 RENDER_LIST = 	render_map.c \
 				render_player.c \
 				render_utils.c \
+				render_sprite.c \
 
 SRC = $(addprefix $(SRC_DIR), $(SRC_LIST))
 
@@ -64,6 +65,7 @@ $(NAME): $(OBJ) libft
 		cp $(LIBFT)/libft.a .
 		$(CC) $(FLAGS) $(SRCS) $(INCLUDES) $(LIBRARY) $(FRAMEWORKS) -o $(NAME)
 		make clean
+		clear
 
 libft:
 		make -C $(LIBFT)

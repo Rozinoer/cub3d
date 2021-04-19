@@ -15,26 +15,9 @@
 # define D 2
 # define A 0
 # define texHeight 64
-#define texWidth 64
-
-typedef struct		s_sprt {
-	double			x;
-	double			y;
-	double			inv_det;
-	double			transform_x;
-	double			transform_y;
-	int				sprite_screen_x;
-	int				sprite_height;
-	int				draw_start_y;
-	int				draw_end_y;
-	int				sprite_width;
-	int				draw_start_x;
-	int				draw_end_x;
-	int				txtr_x;
-	int				txtr_y;
-	int				color;
-	int				d;
-}					t_sprt;
+# define texWidth 64
+# define sprtHeight 16
+# define sprtWidth 16
 
 typedef struct  s_data {
 	void        *img;
@@ -77,6 +60,7 @@ typedef struct s_player
 	double		planeX;
 	double		planeY;
 	double      to_wall;
+	double      to_sprite;
 	char        direct;
 	int         hit;
 	int         side;
@@ -123,6 +107,34 @@ typedef struct s_mlx
 	char    *file;
 }               t_mlx;
 
+typedef struct		s_sprt {
+	double			x;
+	double			y;
+	double			inv_det;
+	double			transform_x;
+	double			transform_y;
+	int				sprite_screen_x;
+	int				sprite_height;
+	int				draw_start_y;
+	int				draw_end_y;
+	int				sprite_width;
+	int				draw_start_x;
+	int				draw_end_x;
+	int				txtr_x;
+	int				txtr_y;
+	int				color;
+	int				d;
+	int				amount_sprt;
+}					t_sprt;
+
+typedef struct s_sprt_pos
+{
+	int		x;
+	int		y;
+	int		index;
+	struct s_sprt_pos *next;
+}				t_sprt_pos;
+
 typedef struct s_game
 {
 	t_mlx       mlx;
@@ -133,8 +145,13 @@ typedef struct s_game
 	t_player    player;
 	t_data      data;
 	t_ray       ray;
-	t_sprt		sprite;
+	t_sprt		sprites;
+	t_sprt_pos	*sprt_pos;
 	int         save;
+	int				*arr_sp;
+	double			*z_buff;
+	int				*spr_oder;
+	double			*spr_dist;
 }               t_game;
 
 void    parser(t_game *game, char *str);
@@ -161,5 +178,12 @@ void    ft_error(char *str);
 int     get_texpack(t_game *game);
 int     get_resolution(t_game *game);
 int     get_map(t_game *game);
-int			ft_get_pxl_clr(t_data *txtr, int x, int y);
+int		ft_get_pxl_clr(t_data *txtr, int x, int y);
+int 	init_sprite(t_game *game);
+int 	render_sprite(t_game *game, int x);
+void				ft_calc_spr(t_sprt_pos *sprite, t_player player, t_game *game);
+int init_sprite_structure(t_game *game);
+t_sprt_pos		*sprt_pos_new(int x, int y, int index);
+void	sprt_pos_add_back(t_sprt_pos **lst, t_sprt_pos *new);
+void				ft_draw_spr(t_game *game, int txt_w, int txt_h);
 #endif
