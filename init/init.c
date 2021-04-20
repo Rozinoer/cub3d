@@ -16,8 +16,8 @@ static void get_pos(t_player *player, t_game *game)
             game->map.map[i][j] == 'W' || game->map.map[i][j] == 'E')
             {
                 player->direct = game->map.map[i][j];
-                player->posX = j;
-                player->posY = i;
+                player->pos_x = j;
+                player->pos_y = i;
                 break;
             }
             j++;
@@ -27,8 +27,8 @@ static void get_pos(t_player *player, t_game *game)
     }
     if(player->direct != -1)
     {
-        player->posX += 0.5;
-        player->posY += 0.5;
+        player->pos_x += 0.5;
+        player->pos_y += 0.5;
     }
 }
 
@@ -38,23 +38,23 @@ static void ft_set_pos_player(t_game *game)
         ft_error("Error. Player position not found\n");
 	if (game->player.direct == 'N')
 	{
-		game->player.dirY = -1;
-		game->player.planeX = FOV;
+		game->player.dir_y = -1;
+		game->player.plane_x = FOV;
 	}
 	else if (game->player.direct == 'S')
 	{
-		game->player.dirY = 1;
-		game->player.planeX = -FOV;
+		game->player.dir_y = 1;
+		game->player.plane_x = -FOV;
 	}
 	else if (game->player.direct == 'W')
 	{
-		game->player.dirX = -1;
-		game->player.planeY = -FOV;
+		game->player.dir_x = -1;
+		game->player.plane_y = -FOV;
 	}
 	else if (game->player.direct == 'E')
 	{
-		game->player.dirX = 1;
-		game->player.planeY = FOV;
+		game->player.dir_x = 1;
+		game->player.plane_y = FOV;
 	}
 }
 
@@ -89,10 +89,10 @@ void init_struct(t_game *game)
 {
     t_player player;
 
-    player.dirX = 0;
-    player.dirY = 0;
-    player.planeX = 0;
-    player.planeY = 0;
+    player.dir_x = 0;
+    player.dir_y = 0;
+    player.plane_x = 0;
+    player.plane_y = 0;
     player.direct = -1;
     mlx_get_screen_size(&game->mlx.monitor_width, &game->mlx.monitor_hight);
     parser(game, game->mlx.file);

@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-static void another_key(int keycode, t_game *game, double oldDirX, double oldPlaneX)
+static void another_key(int keycode, t_game *game, double olddir_x, double oldplane_x)
 {
 	double rotSpeed;
 
@@ -14,10 +14,10 @@ static void another_key(int keycode, t_game *game, double oldDirX, double oldPla
 		mlx_destroy_window(game->mlx.mlx, game->mlx.mlx_win);
 		exit(0);
 	}
-	game->player.dirX = game->player.dirX * cos(rotSpeed) - game->player.dirY * sin(rotSpeed);
-	game->player.dirY = oldDirX * sin(rotSpeed) + game->player.dirY * cos(rotSpeed);
-	game->player.planeX = game->player.planeX * cos(rotSpeed) - game->player.planeY * sin(rotSpeed);
-	game->player.planeY = oldPlaneX * sin(rotSpeed) + game->player.planeY * cos(rotSpeed);
+	game->player.dir_x = game->player.dir_x * cos(rotSpeed) - game->player.dir_y * sin(rotSpeed);
+	game->player.dir_y = olddir_x * sin(rotSpeed) + game->player.dir_y * cos(rotSpeed);
+	game->player.plane_x = game->player.plane_x * cos(rotSpeed) - game->player.plane_y * sin(rotSpeed);
+	game->player.plane_y = oldplane_x * sin(rotSpeed) + game->player.plane_y * cos(rotSpeed);
 	render_next_frame(game);
 }
 
@@ -33,11 +33,11 @@ static void forward_reverse(int keycode, t_game *game)
 		move_speed *= -1;
 		smooth *= -1;
 	}
-	if (game->map.map[(int)(game->player.posY + game->player.dirY * (move_speed + smooth))]
-	[(int)(game->player.posX + game->player.dirX * (move_speed + smooth))] != '1')
+	if (game->map.map[(int)(game->player.pos_y + game->player.dir_y * (move_speed + smooth))]
+	[(int)(game->player.pos_x + game->player.dir_x * (move_speed + smooth))] != '1')
 	{
-		game->player.posX += game->player.dirX * move_speed;
-		game->player.posY += game->player.dirY * move_speed;
+		game->player.pos_x += game->player.dir_x * move_speed;
+		game->player.pos_y += game->player.dir_y * move_speed;
 		render_next_frame(game);
 	}
 }
@@ -54,22 +54,22 @@ static void left_right(int keycode, t_game *game)
 		move_speed *= -1;
 		smooth *= -1;
 	}
-	if (game->map.map[(int)(game->player.posY + game->player.dirY * (move_speed * game->player.planeY))]
-	[(int)(game->player.posX - game->player.dirX * (move_speed * game->player.planeX))] != '1')
+	if (game->map.map[(int)(game->player.pos_y + game->player.dir_y * (move_speed * game->player.plane_y))]
+	[(int)(game->player.pos_x - game->player.dir_x * (move_speed * game->player.plane_x))] != '1')
 	{
-		game->player.posY -= -game->player.dirX * move_speed;
-		game->player.posX -= game->player.dirY * move_speed;
+		game->player.pos_y -= -game->player.dir_x * move_speed;
+		game->player.pos_x -= game->player.dir_y * move_speed;
 		render_next_frame(game);
 	}
 }
 
 int key_pressed(int keycode, t_game *game)
 {
-	double oldDirX;
-	double oldPlaneX;
+	double olddir_x;
+	double oldplane_x;
 
-	oldDirX = game->player.dirX;
-	oldPlaneX = game->player.planeX;
+	olddir_x = game->player.dir_x;
+	oldplane_x = game->player.plane_x;
 	if (keycode == W || keycode == S)
 	{
 		forward_reverse(keycode, game);
@@ -79,6 +79,6 @@ int key_pressed(int keycode, t_game *game)
 		left_right(keycode, game);
 	}
 	else if (keycode == 124 || keycode == 123 || keycode == 53)
-		another_key(keycode, game, oldDirX, oldPlaneX);
+		another_key(keycode, game, olddir_x, oldplane_x);
 	return(0);
 }

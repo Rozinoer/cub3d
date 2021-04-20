@@ -29,15 +29,15 @@ void				ft_draw_spr(t_game *game, int txt_w, int txt_h)
 	}
 }
 
-void				ft_calc_spr(t_sprt_pos *sprite, t_player player, t_game *game)
+void				spr(t_sprt_pos *sprite, t_player player, t_game *game)
 {	
-	game->sprites.x = (double)sprite->x + 0.5 - player.posX;
-	game->sprites.y = (double)sprite->y + 0.5 - player.posY;
-	game->sprites.inv_det = 1.0 / (player.planeX * player.dirY - player.dirX * player.planeY);
-	game->sprites.transform_x = game->sprites.inv_det * (player.dirY * game->sprites.x - \
-										player.dirX * game->sprites.y);
-	game->sprites.transform_y = game->sprites.inv_det * (-player.planeY * game->sprites.x + \
-														player.planeX * game->sprites.y);
+	game->sprites.x = (double)sprite->x + 0.5 - player.pos_x;
+	game->sprites.y = (double)sprite->y + 0.5 - player.pos_y;
+	game->sprites.inv_det = 1.0 / (player.plane_x * player.dir_y - player.dir_x * player.plane_y);
+	game->sprites.transform_x = game->sprites.inv_det * (player.dir_y * game->sprites.x - \
+										player.dir_x * game->sprites.y);
+	game->sprites.transform_y = game->sprites.inv_det * (-player.plane_y * game->sprites.x + \
+														player.plane_x * game->sprites.y);
 	game->sprites.sprite_screen_x = (int)((game->mlx.win_width / 2) * \
 							(1 + game->sprites.transform_x / game->sprites.transform_y));
 	game->sprites.sprite_height = abs((int)(game->mlx.win_hight / (game->sprites.transform_y)));
@@ -129,9 +129,8 @@ int init_sprite(t_game *game)
 		game->spr_oder[i] = i;
 		spr_x = (double)get_sprite(game, i)->x + 0.5;
 		spr_y = (double)get_sprite(game, i)->y + 0.5;
-		game->spr_dist[i] = (pow((game->player.posX - spr_x), 2) + \
-								pow((game->player.posY - spr_y), 2));
-		get_sprite(game, i)->to_sprt = game->spr_dist[i];
+		game->spr_dist[i] = (pow((game->player.pos_x - spr_x), 2) + \
+								pow((game->player.pos_y - spr_y), 2));
 		i++;
 	}
 	ft_sort(game);

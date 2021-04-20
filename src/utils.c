@@ -9,13 +9,13 @@ void            my_mlx_pixel_put(t_data data, int x, int y, int color)
     *(unsigned int*)dst = color;
 }
 
-void            drow_line(t_data data, int current_x, int startY, int endY, int color)
+void            dl(t_data data, int current_x, int start_y, int end_y, int color)
 {
     char    *dst;
-    while (startY < endY)
+    while (start_y < end_y)
     {
-        dst = data.addr + (startY * data.line_length + current_x * (data.bits_per_pixel / 8));
+        dst = data.addr + (start_y * data.line_length + current_x * (data.bits_per_pixel / 8));
         *(unsigned int*)dst = color;
-        startY++;
+        start_y++;
     }
 }

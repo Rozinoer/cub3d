@@ -1,99 +1,99 @@
 #include "cub3d.h"
 
-static void side_step(t_game *game, double rayDirX, double rayDirY)
+static void side_step(t_game *game, double raydir_x, double raydir_y)
 {
-	if(rayDirX < 0)
+	if(raydir_x < 0)
 	{
-		game->ray.stepX = -1;
-		game->player.sideDistX = (game->player.posX - game->ray.mapX) * game->ray.deltaDistX;
+		game->ray.step_x = -1;
+		game->player.side_distx = (game->player.pos_x - game->ray.map_x) * game->ray.delta_distx;
 	}
 	else
 	{
-		game->ray.stepX = 1;
-		game->player.sideDistX = (game->ray.mapX + 1.0 - game->player.posX) * game->ray.deltaDistX;
+		game->ray.step_x = 1;
+		game->player.side_distx = (game->ray.map_x + 1.0 - game->player.pos_x) * game->ray.delta_distx;
 	}
-	if(rayDirY < 0)
+	if(raydir_y < 0)
 	{
-		game->ray.stepY = -1;
-		game->player.sideDistY = (game->player.posY - game->ray.mapY) * game->ray.deltaDistY;
+		game->ray.step_y = -1;
+		game->player.side_disty = (game->player.pos_y - game->ray.map_y) * game->ray.delta_disty;
 	}
 	else
 	{
-		game->ray.stepY = 1;
-		game->player.sideDistY = (game->ray.mapY + 1.0 - game->player.posY) * game->ray.deltaDistY;
+		game->ray.step_y = 1;
+		game->player.side_disty = (game->ray.map_y + 1.0 - game->player.pos_y) * game->ray.delta_disty;
 	}
 }
 
-static void choose_textr(t_game *game, double rayDirX, double rayDirY, int x)
+static void choose_textr(t_game *game, double raydir_x, double raydir_y, int x)
 {
 	if(game->player.side == 0)
-		game->player.to_wall = (game->ray.mapX - game->player.posX + (1 - game->ray.stepX) / 2) / rayDirX;
+		game->player.to_wall = (game->ray.map_x - game->player.pos_x + (1 - game->ray.step_x) / 2) / raydir_x;
 	else
-		game->player.to_wall = (game->ray.mapY - game->player.posY + (1 - game->ray.stepY) / 2) / rayDirY;
+		game->player.to_wall = (game->ray.map_y - game->player.pos_y + (1 - game->ray.step_y) / 2) / raydir_y;
 	if (game->sprites.amount_sprt > 0)
 		game->z_buff[x] = game->player.to_wall;
-	game->ray.lineHeight = (int)(game->mlx.win_width / game->player.to_wall);
-	if (game->player.side == 1 && game->ray.stepY < 0)
+	game->ray.line_height = (int)(game->mlx.win_width / game->player.to_wall);
+	if (game->player.side == 1 && game->ray.step_y < 0)
 		game->txtr.current = game->txtr.wall_n;
-	else if (game->player.side == 1 && game->ray.stepY > 0)
+	else if (game->player.side == 1 && game->ray.step_y > 0)
 		game->txtr.current = game->txtr.wall_s;
-	else if (game->player.side == 0 && game->ray.stepX < 0)
+	else if (game->player.side == 0 && game->ray.step_x < 0)
 		game->txtr.current = game->txtr.wall_e;
-	else if (game->player.side == 0 && game->ray.stepX > 0)
+	else if (game->player.side == 0 && game->ray.step_x > 0)
 		game->txtr.current = game->txtr.wall_w;
-	if (game->map.map[game->ray.mapY][game->ray.mapX] == '2')
+	if (game->map.map[game->ray.map_y][game->ray.map_x] == '2')
 		game->txtr.current = game->txtr.sprite;
 }
 
-static void dda_perform(t_game *game, double rayDirX, double rayDirY, int x)
+static void dda_perform(t_game *game, double raydir_x, double raydir_y, int x)
 {
 	int hit;
 
 	hit = 0;
 	while (hit == 0)
 	{
-		if(game->player.sideDistX < game->player.sideDistY)
+		if(game->player.side_distx < game->player.side_disty)
 		{
-			game->player.sideDistX += game->ray.deltaDistX;
-			game->ray.mapX += game->ray.stepX;
+			game->player.side_distx += game->ray.delta_distx;
+			game->ray.map_x += game->ray.step_x;
 			game->player.side = 0;
 		}
 		else
 		{
-			game->player.sideDistY += game->ray.deltaDistY;
-			game->ray.mapY += game->ray.stepY;
+			game->player.side_disty += game->ray.delta_disty;
+			game->ray.map_y += game->ray.step_y;
 			game->player.side = 1;
 		}
-		if(game->map.map[game->ray.mapY][game->ray.mapX] == '1')
+		if(game->map.map[game->ray.map_y][game->ray.map_x] == '1')
 			hit = 1;
 	}
-	choose_textr(game, rayDirX, rayDirY, x);
+	choose_textr(game, raydir_x, raydir_y, x);
 }
 
-static void calculate_txtr_pos(t_game *game, int x, double rayDirX, double rayDirY)
+static void calculate_txtr_pos(t_game *game, int x, double raydir_x, double raydir_y)
 {
-	game->ray.drawStart = -game->ray.lineHeight / 2 + game->mlx.win_hight / 2;
-	if(game->ray.drawStart < 0)
-		game->ray.drawStart = 0;
-	game->ray.drawEnd = game->ray.lineHeight / 2 + game->mlx.win_hight / 2;
-	if(game->ray.drawEnd >= game->mlx.win_hight)
-		game->ray.drawEnd = game->mlx.win_hight - 1;
+	game->ray.draw_start = -game->ray.line_height / 2 + game->mlx.win_hight / 2;
+	if(game->ray.draw_start < 0)
+		game->ray.draw_start = 0;
+	game->ray.draw_end = game->ray.line_height / 2 + game->mlx.win_hight / 2;
+	if(game->ray.draw_end >= game->mlx.win_hight)
+		game->ray.draw_end = game->mlx.win_hight - 1;
 	if (game->player.side == 0)
-		game->txtr.wallX = game->player.posY + game->player.to_wall * rayDirY;
+		game->txtr.wall_x = game->player.pos_y + game->player.to_wall * raydir_y;
 	else
-		game->txtr.wallX = game->player.posX + game->player.to_wall * rayDirX;
-	game->txtr.wallX -= floor(game->txtr.wallX);
-	game->txtr.texX = (int)(game->txtr.wallX * (double)texWidth);
-	game->txtr.step = 1.0 * texHeight / game->ray.lineHeight;
-	game->txtr.texPos = (game->ray.drawStart - game->mlx.win_hight / 2.0 + \
-		game->ray.lineHeight / 2.0) * game->txtr.step;
-	while(game->ray.drawStart < game->ray.drawEnd)
+		game->txtr.wall_x = game->player.pos_x + game->player.to_wall * raydir_x;
+	game->txtr.wall_x -= floor(game->txtr.wall_x);
+	game->txtr.tex_x = (int)(game->txtr.wall_x * (double)TEXWIDTH);
+	game->txtr.step = 1.0 * TEXHEIGHT / game->ray.line_height;
+	game->txtr.tex_pos = (game->ray.draw_start - game->mlx.win_hight / 2.0 + \
+		game->ray.line_height / 2.0) * game->txtr.step;
+	while(game->ray.draw_start < game->ray.draw_end)
 	{
-		game->txtr.texY = (int)game->txtr.texPos & (texHeight - 1);
-		game->txtr.texPos += game->txtr.step;
-		game->txtr.color = ft_get_pxl_clr(game->txtr.current, game->txtr.texX, game->txtr.texY);
-		my_mlx_pixel_put(game->data, x, game->ray.drawStart, game->txtr.color);
-		game->ray.drawStart++;
+		game->txtr.tex_y = (int)game->txtr.tex_pos & (TEXHEIGHT - 1);
+		game->txtr.tex_pos += game->txtr.step;
+		game->txtr.color = ft_get_pxl_clr(game->txtr.current, game->txtr.tex_x, game->txtr.tex_y);
+		my_mlx_pixel_put(game->data, x, game->ray.draw_start, game->txtr.color);
+		game->ray.draw_start++;
 	}
 }
 
@@ -101,25 +101,25 @@ void print_ray(t_game *game)
 {
 	int x;
 	double cameraX;
-	double rayDirX;
-	double rayDirY;
+	double raydir_x;
+	double raydir_y;
 
 	x = 0;
 	while (x < game->mlx.win_width)
 	{
 		cameraX = 2 * x / (double)game->mlx.win_width - 1;  
-		rayDirX = game->player.dirX + game->player.planeX * cameraX;
-		rayDirY = game->player.dirY + game->player.planeY * cameraX;
+		raydir_x = game->player.dir_x + game->player.plane_x * cameraX;
+		raydir_y = game->player.dir_y + game->player.plane_y * cameraX;
 
-		game->ray.mapX = (int)(game->player.posX);
-		game->ray.mapY = (int)(game->player.posY);
+		game->ray.map_x = (int)(game->player.pos_x);
+		game->ray.map_y = (int)(game->player.pos_y);
 
-		game->ray.deltaDistX = fabs(1 / rayDirX);
-		game->ray.deltaDistY = fabs(1 / rayDirY);
+		game->ray.delta_distx = fabs(1 / raydir_x);
+		game->ray.delta_disty = fabs(1 / raydir_y);
 
-		side_step(game, rayDirX, rayDirY);
-		dda_perform(game, rayDirX, rayDirY, x);
-		calculate_txtr_pos(game, x, rayDirX, rayDirY);
+		side_step(game, raydir_x, raydir_y);
+		dda_perform(game, raydir_x, raydir_y, x);
+		calculate_txtr_pos(game, x, raydir_x, raydir_y);
 		x++;
 	}
 	game->tmp = game->sprt_pos;
@@ -128,12 +128,12 @@ void print_ray(t_game *game)
 		init_sprite(game);
 		while (game->sprt_pos->next != NULL)
 		{
-			ft_calc_spr(game->sprt_pos, game->player, game);
+			spr(game->sprt_pos, game->player, game);
 			if (game->sprites.draw_start_x < game->sprites.draw_end_x)
 				ft_draw_spr(game, game->txtr.sprite->width, game->txtr.sprite->height);
 			game->sprt_pos = game->sprt_pos->next;
 		}
-		ft_calc_spr(game->sprt_pos, game->player, game);
+		spr(game->sprt_pos, game->player, game);
 		if (game->sprites.draw_start_x < game->sprites.draw_end_x)
 			ft_draw_spr(game, game->txtr.sprite->width, game->txtr.sprite->height);
 		game->sprt_pos = game->tmp;
