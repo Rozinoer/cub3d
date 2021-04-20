@@ -114,7 +114,7 @@ void				ft_sort(t_game *game)
 
 int init_sprite(t_game *game)
 {
-	int	i;
+	int				i;
 	double			spr_x;
 	double			spr_y;
 

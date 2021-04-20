@@ -21,46 +21,62 @@ static void another_key(int keycode, t_game *game, double oldDirX, double oldPla
 	render_next_frame(game);
 }
 
-int key_pressed(int keycode, t_game *game)
+static void forward_reverse(int keycode, t_game *game)
 {
 	double move_speed;
-	double oldDirX;
-	double oldPlaneX;
 	double smooth;
 
-	smooth = 0.4;
+	smooth = 0.1;
+	move_speed = 0.1;
+	if (keycode == S)
+	{
+		move_speed *= -1;
+		smooth *= -1;
+	}
+	if (game->map.map[(int)(game->player.posY + game->player.dirY * (move_speed + smooth))]
+	[(int)(game->player.posX + game->player.dirX * (move_speed + smooth))] != '1')
+	{
+		game->player.posX += game->player.dirX * move_speed;
+		game->player.posY += game->player.dirY * move_speed;
+		render_next_frame(game);
+	}
+}
+
+static void left_right(int keycode, t_game *game)
+{
+	double move_speed;
+	double smooth;
+
+	smooth = 0.5;
+	move_speed = 0.1;
+	if (keycode == A)
+	{
+		move_speed *= -1;
+		smooth *= -1;
+	}
+	if (game->map.map[(int)(game->player.posY + game->player.dirY * (move_speed * game->player.planeY))]
+	[(int)(game->player.posX - game->player.dirX * (move_speed * game->player.planeX))] != '1')
+	{
+		game->player.posY -= -game->player.dirX * move_speed;
+		game->player.posX -= game->player.dirY * move_speed;
+		render_next_frame(game);
+	}
+}
+
+int key_pressed(int keycode, t_game *game)
+{
+	double oldDirX;
+	double oldPlaneX;
+
 	oldDirX = game->player.dirX;
 	oldPlaneX = game->player.planeX;
-	move_speed = 0.1;
 	if (keycode == W || keycode == S)
 	{
-		if (keycode == S)
-		{
-			move_speed *= -1;
-			smooth *= -1;
-		}
-		if (game->map.map[(int)(game->player.posY + game->player.dirY * (move_speed + smooth))]
-		[(int)(game->player.posX + game->player.dirX * (move_speed + smooth))] != '1')
-		{
-			game->player.posX += game->player.dirX * move_speed;
-	  		game->player.posY += game->player.dirY * move_speed;
-		}
-		render_next_frame(game);
+		forward_reverse(keycode, game);
 	}
 	if (keycode == A || keycode == D)
 	{
-		if (keycode == A)
-		{
-			move_speed *= -1;
-			smooth *= -1;
-		}
-		if (game->map.map[(int)(game->player.posY + game->player.dirY * (move_speed + smooth))]
-		[(int)(game->player.posX - game->player.dirX * (move_speed + smooth))] != '1')
-		{
-			game->player.posY -= -game->player.dirX * move_speed;
-			game->player.posX -= game->player.dirY * move_speed;
-		}
-		render_next_frame(game);
+		left_right(keycode, game);
 	}
 	else if (keycode == 124 || keycode == 123 || keycode == 53)
 		another_key(keycode, game, oldDirX, oldPlaneX);
