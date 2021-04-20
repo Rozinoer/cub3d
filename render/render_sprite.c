@@ -89,7 +89,8 @@ void				ft_sort(t_game *game)
 	int				i;
 	int				j;
 	double			tmp;
-	int				temp_i;
+	t_sprt_pos		*temp_f;
+	t_sprt_pos		*temp_s;
 
 	j = 0;
 	while (j < game->sprites.amount_sprt - 1)
@@ -102,9 +103,13 @@ void				ft_sort(t_game *game)
 				tmp = game->spr_dist[i];
 				game->spr_dist[i] = game->spr_dist[i + 1];
 				game->spr_dist[i + 1] = tmp;
-				temp_i = game->spr_oder[i];
-				game->spr_oder[i] = game->spr_oder[i + 1];
-				game->spr_oder[i + 1] = temp_i;
+				temp_f = get_sprite(game, i);
+				game->temp = temp_f;
+				temp_s = get_sprite(game,i + 1);
+				temp_f->x = temp_s->x;
+				temp_f->y = temp_s->y;
+				temp_s->x = game->temp->x;
+				temp_s->y = game->temp->y;
 			}
 			i++;
 		}
@@ -126,6 +131,7 @@ int init_sprite(t_game *game)
 		spr_y = (double)get_sprite(game, i)->y + 0.5;
 		game->spr_dist[i] = (pow((game->player.posX - spr_x), 2) + \
 								pow((game->player.posY - spr_y), 2));
+		get_sprite(game, i)->to_sprt = game->spr_dist[i];
 		i++;
 	}
 	ft_sort(game);

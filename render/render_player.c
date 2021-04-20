@@ -122,24 +122,20 @@ void print_ray(t_game *game)
 		calculate_txtr_pos(game, x, rayDirX, rayDirY);
 		x++;
 	}
-	t_sprt_pos *tmp = game->sprt_pos;
+	game->tmp = game->sprt_pos;
 	if (game->sprites.amount_sprt > 0)
 	{
 		init_sprite(game);
 		while (game->sprt_pos->next != NULL)
 		{
 			ft_calc_spr(game->sprt_pos, game->player, game);
-			if (game->sprites.draw_start_x >= game->sprites.draw_end_x)
-				game->sprt_pos = game->sprt_pos->next;
-			else
-			{
+			if (game->sprites.draw_start_x < game->sprites.draw_end_x)
 				ft_draw_spr(game, game->txtr.sprite->width, game->txtr.sprite->height);
-				game->sprt_pos = game->sprt_pos->next;
-			}
+			game->sprt_pos = game->sprt_pos->next;
 		}
 		ft_calc_spr(game->sprt_pos, game->player, game);
 		if (game->sprites.draw_start_x < game->sprites.draw_end_x)
 			ft_draw_spr(game, game->txtr.sprite->width, game->txtr.sprite->height);
-		game->sprt_pos = tmp;
+		game->sprt_pos = game->tmp;
 	}
 }

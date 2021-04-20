@@ -132,6 +132,7 @@ typedef struct s_sprt_pos
 	int		x;
 	int		y;
 	int		index;
+	double 	to_sprt;
 	struct s_sprt_pos *next;
 }				t_sprt_pos;
 
@@ -148,6 +149,7 @@ typedef struct s_game
 	t_sprt		sprites;
 	t_sprt_pos	*sprt_pos;
 	t_sprt_pos *tmp;
+	t_sprt_pos		*temp;
 	int         save;
 	int				*arr_sp;
 	double			*z_buff;
