@@ -202,4 +202,5 @@ t_sprt_pos				*sprt_pos_new(int x, int y, int index);
 t_sprt_pos				*get_sprite(t_game *game, int index);
 void					sprt_pos_add_back(t_sprt_pos **lst, t_sprt_pos *new);
 void					ft_draw_spr(t_game *game, int txt_w, int txt_h);
+void					allocate_memory(t_game *game);
 #endif

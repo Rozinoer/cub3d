@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   render_sprite.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dmyesha <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/04/20 20:16:37 by dmyesha           #+#    #+#             */
+/*   Updated: 2021/04/20 20:16:39 by dmyesha          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 void				ft_draw_spr(t_game *game, int txt_w, int txt_h)
@@ -89,9 +101,8 @@ void				ft_sort(t_game *game)
 	int				i;
 	int				j;
 	double			tmp;
-	t_sprt_pos		*temp_f;
-	t_sprt_pos		*temp_s;
-
+	int 			x;
+	int 			y;
 	j = 0;
 	while (j < game->sprites.amount_sprt - 1)
 	{
@@ -103,13 +114,12 @@ void				ft_sort(t_game *game)
 				tmp = game->spr_dist[i];
 				game->spr_dist[i] = game->spr_dist[i + 1];
 				game->spr_dist[i + 1] = tmp;
-				temp_f = get_sprite(game, i);
-				game->temp = temp_f;
-				temp_s = get_sprite(game,i + 1);
-				temp_f->x = temp_s->x;
-				temp_f->y = temp_s->y;
-				temp_s->x = game->temp->x;
-				temp_s->y = game->temp->y;
+				x = get_sprite(game, i)->x;
+				y = get_sprite(game, i)->y;
+				get_sprite(game, i)->x = get_sprite(game, i + 1)->x;
+				get_sprite(game, i)->y = get_sprite(game, i + 1)->y;
+				get_sprite(game, i + 1)->x = x;
+				get_sprite(game, i + 1)->y = y;
 			}
 			i++;
 		}
