@@ -107,6 +107,7 @@ void print_ray(t_game *game)
 	x = 0;
 	while (x < game->mlx.win_width)
 	{
+		game->current_x = x;
 		cameraX = 2 * x / (double)game->mlx.win_width - 1;  
 		raydir_x = game->player.dir_x + game->player.plane_x * cameraX;
 		raydir_y = game->player.dir_y + game->player.plane_y * cameraX;
@@ -114,9 +115,13 @@ void print_ray(t_game *game)
 		game->ray.map_x = (int)(game->player.pos_x);
 		game->ray.map_y = (int)(game->player.pos_y);
 
-		game->ray.delta_distx = fabs(1 / raydir_x);
-		game->ray.delta_disty = fabs(1 / raydir_y);
-
+		if (raydir_y != 0)
+			if (raydir_x != 0)
+				game->ray.delta_distx = fabs(1 / raydir_x);
+		if (raydir_x != 0)
+			if (raydir_y != 0)
+				game->ray.delta_disty = fabs(1 / raydir_y);
+				
 		side_step(game, raydir_x, raydir_y);
 		dda_perform(game, raydir_x, raydir_y, x);
 		calculate_txtr_pos(game, x, raydir_x, raydir_y);

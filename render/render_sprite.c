@@ -48,7 +48,7 @@ void				spr(t_sprt_pos *sprite, t_player player, t_game *game)
 	if (game->sprites.draw_end_y >= game->mlx.win_hight)
 		game->sprites.draw_end_y = game->mlx.win_hight - 1;
 	game->sprites.sprite_width = abs((int)(game->mlx.win_hight / (game->sprites.transform_y)));
-	game->sprites.draw_start_x = -game->sprites.sprite_width / 2 + game->sprites.sprite_screen_x;
+	game->sprites.draw_start_x = game->sprites.sprite_screen_x - game->sprites.sprite_width / 2;
 	if (game->sprites.draw_start_x < 0)
 		game->sprites.draw_start_x = 0;
 	game->sprites.draw_end_x = game->sprites.sprite_width / 2 + game->sprites.sprite_screen_x;
@@ -126,7 +126,6 @@ int init_sprite(t_game *game)
 	i = 0;
 	while (i < game->sprites.amount_sprt)
 	{
-		game->spr_oder[i] = i;
 		spr_x = (double)get_sprite(game, i)->x + 0.5;
 		spr_y = (double)get_sprite(game, i)->y + 0.5;
 		game->spr_dist[i] = (pow((game->player.pos_x - spr_x), 2) + \

@@ -6,7 +6,7 @@
 /*   By: dmyesha <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/20 17:44:13 by dmyesha           #+#    #+#             */
-/*   Updated: 2021/04/20 17:44:17 by dmyesha          ###   ########.fr       */
+/*   Updated: 2021/04/20 18:35:43 by dmyesha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,9 @@
 # define A 0
 # define TEXHEIGHT 64
 # define TEXWIDTH 64
+# define FOV 0.5
 
-typedef struct			s_data
+typedef struct s_data
 {
 	void				*img;
 	char				*addr;
@@ -44,7 +45,7 @@ typedef struct			s_data
 	int					y;
 }						t_data;
 
-typedef struct			s_ray
+typedef struct s_ray
 {
 	int					step_x;
 	int					step_y;
@@ -57,7 +58,7 @@ typedef struct			s_ray
 	int					draw_end;
 }						t_ray;
 
-typedef struct			s_player
+typedef struct s_player
 {
 	float				pos_x;
 	float				pos_y;
@@ -77,7 +78,7 @@ typedef struct			s_player
 	int					side;
 }						t_player;
 
-typedef struct			s_map
+typedef struct s_map
 {
 	char				**map;
 	int					map_size;
@@ -91,7 +92,7 @@ typedef struct			s_map
 	char				*sprite_tex;
 }						t_map;
 
-typedef struct			s_texture
+typedef struct s_texture
 {
 	t_data				*wall_n;
 	t_data				*wall_s;
@@ -107,7 +108,7 @@ typedef struct			s_texture
 	double				tex_pos;
 }						t_texture;
 
-typedef struct			s_mlx
+typedef struct s_mlx
 {
 	void				*mlx;
 	void				*mlx_win;
@@ -118,7 +119,7 @@ typedef struct			s_mlx
 	char				*file;
 }						t_mlx;
 
-typedef struct			s_sprt
+typedef struct s_sprt
 {
 	double				x;
 	double				y;
@@ -139,7 +140,7 @@ typedef struct			s_sprt
 	int					amount_sprt;
 }						t_sprt;
 
-typedef struct			s_sprt_pos
+typedef struct s_sprt_pos
 {
 	int					x;
 	int					y;
@@ -147,7 +148,7 @@ typedef struct			s_sprt_pos
 	struct s_sprt_pos	*next;
 }						t_sprt_pos;
 
-typedef struct			s_game
+typedef struct s_game
 {
 	t_mlx				mlx;
 	t_texture			txtr;
@@ -166,6 +167,7 @@ typedef struct			s_game
 	double				*z_buff;
 	int					*spr_oder;
 	double				*spr_dist;
+	int					current_x;
 }						t_game;
 
 void					parser(t_game *game, char *str);
@@ -186,7 +188,6 @@ int						get_ceiling_color(t_game *game);
 void					my_mlx_pixel_put(t_data data, int x, int y, int color);
 void					init_struct(t_game *game);
 int						check_map(t_game *game);
-void					dl(t_data data, int x, int st_y, int end_y, int color);
 int						screenshot(t_game *game);
 void					ft_error(char *str);
 int						get_texpack(t_game *game);

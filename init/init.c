@@ -1,10 +1,21 @@
-#include "cub3d.h"
-#define FOV 0.5
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dmyesha <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/04/20 18:52:42 by dmyesha           #+#    #+#             */
+/*   Updated: 2021/04/20 18:52:45 by dmyesha          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-static void get_pos(t_player *player, t_game *game)
+#include "cub3d.h"
+
+static void	get_pos(t_player *player, t_game *game)
 {
-    int i;
-    int j;
+	int i;
+	int j;
 
     i = 0;
     j = 0;
@@ -94,6 +105,7 @@ void init_struct(t_game *game)
     player.plane_x = 0;
     player.plane_y = 0;
     player.direct = -1;
+	game->sprt_pos = NULL;
     mlx_get_screen_size(&game->mlx.monitor_width, &game->mlx.monitor_hight);
     parser(game, game->mlx.file);
     get_pos(&player, game);
