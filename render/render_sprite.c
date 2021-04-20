@@ -65,12 +65,6 @@ int init_sprite_structure(t_game *game)
 	x = 0;
 	y = 0;
 	ind = 0;
-	if(!(game->sprt_pos = malloc(sizeof(t_sprt_pos))))
-		ft_error("Error memory allocation\n");
-	if (!(game->spr_dist = malloc(game->sprites.amount_sprt * sizeof(double))))
-		ft_error("Error memory allocation\n");
-	if (!(game->spr_oder = malloc(game->sprites.amount_sprt * sizeof(int))))
-		ft_error("Error memory allocation\n");
 	while (y < game->map.map_size)
 	{
 		while (game->map.map[y][x] != '\0')
@@ -85,35 +79,15 @@ int init_sprite_structure(t_game *game)
 		y++;
 		x = 0;
 	}
-	if (!(game->z_buff = malloc(game->mlx.win_width * sizeof(double))))
-		ft_error("Error memory allocation\n");
-	
-	t_sprt_pos *tmp = game->sprt_pos;
-	game->sprt_pos = tmp->next;
-	free(tmp);
+	game->tmp = game->sprt_pos;
+	game->sprt_pos = game->tmp->next;
     return (0);
-}
-
-t_sprt_pos *get_sprite(t_game *game, int index)
-{
-	t_sprt_pos *tmp;
-
-	tmp = game->sprt_pos;
-	while(tmp->next != NULL)
-	{
-		if (tmp->index == index)
-			return (tmp);
-		tmp = tmp->next;
-	}
-	if (tmp->index == index)
-		return (tmp);
-	return (NULL);
 }
 
 void				ft_sort(t_game *game)
 {
-	int	i;
-	int	j;
+	int				i;
+	int				j;
 	double			tmp;
 	int				temp_i;
 

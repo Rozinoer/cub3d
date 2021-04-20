@@ -147,6 +147,7 @@ typedef struct s_game
 	t_ray       ray;
 	t_sprt		sprites;
 	t_sprt_pos	*sprt_pos;
+	t_sprt_pos *tmp;
 	int         save;
 	int				*arr_sp;
 	double			*z_buff;
@@ -186,4 +187,5 @@ int init_sprite_structure(t_game *game);
 t_sprt_pos		*sprt_pos_new(int x, int y, int index);
 void	sprt_pos_add_back(t_sprt_pos **lst, t_sprt_pos *new);
 void				ft_draw_spr(t_game *game, int txt_w, int txt_h);
+t_sprt_pos *get_sprite(t_game *game, int index);
 #endif

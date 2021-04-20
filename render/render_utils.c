@@ -69,3 +69,19 @@ void	sprt_pos_add_back(t_sprt_pos **lst, t_sprt_pos *new)
 		}
 	}
 }
+
+t_sprt_pos *get_sprite(t_game *game, int index)
+{
+	t_sprt_pos *tmp;
+
+	tmp = game->sprt_pos;
+	while(tmp->next != NULL)
+	{
+		if (tmp->index == index)
+			return (tmp);
+		tmp = tmp->next;
+	}
+	if (tmp->index == index)
+		return (tmp);
+	return (NULL);
+}

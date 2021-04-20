@@ -65,6 +65,22 @@ static void check_sym(t_game *game, char *sym_pull)
 	}
 }
 
+static void allocate_memory(t_game *game)
+{
+	game->sprt_pos = malloc(sizeof(t_sprt_pos));
+	if(!(game->sprt_pos))
+		ft_error("Error memory allocation\n");
+	game->spr_dist = malloc(game->sprites.amount_sprt * sizeof(double));
+	if (!(game->spr_dist))
+		ft_error("Error memory allocation\n");
+	game->spr_oder = malloc(game->sprites.amount_sprt * sizeof(int));
+	if (!(game->spr_oder))
+		ft_error("Error memory allocation\n");
+	game->z_buff = malloc(game->mlx.win_width * sizeof(double));
+	if (!(game->z_buff))
+		ft_error("Error memory allocation\n");
+}
+
 static void count_sprites(t_game *game)
 {
 	int x;
@@ -84,6 +100,7 @@ static void count_sprites(t_game *game)
 		x = 0;
 		y++;
 	}
+	allocate_memory(game);
 }
 
 int check_map(t_game *game)
