@@ -12,6 +12,17 @@
 
 #include "cub3d.h"
 
+static void check_str(char *str)
+{
+	while (*str)
+	{
+		if(*str != ' ' && (*str < '0' || *str > '9') && *str != ',')
+			ft_error("Error. Color is invalid\n");
+		str++;
+	}
+	
+}
+
 int	get_floor_color(t_game *game)
 {
 	int		i;
@@ -23,6 +34,7 @@ int	get_floor_color(t_game *game)
 	{
 		if (check_identifer(list->content, "F ") != -1)
 		{
+			check_str(list->content + 1);
 			i = check_color(list->content + 2, game, 'F');
 			break ;
 		}
@@ -42,6 +54,7 @@ int	get_ceiling_color(t_game *game)
 	{
 		if (check_identifer(list->content, "C ") != -1)
 		{
+			check_str(list->content + 1);
 			i = check_color(list->content + 2, game, 'C');
 			break ;
 		}

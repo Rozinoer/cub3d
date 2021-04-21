@@ -12,17 +12,6 @@
 
 #include "cub3d.h"
 
-int			ft_get_pxl_clr(t_data *txtr, int x, int y)
-{
-	int		*ptr;
-	int		color;
-
-	ptr = (void *)txtr->addr + (y * txtr->line_length + x * \
-												(txtr->bits_per_pixel / 8));
-	color = *(int*)ptr;
-	return (color);
-}
-
 void print_back(t_game *game)
 {
     int x;
@@ -96,4 +85,35 @@ t_sprt_pos *get_sprite(t_game *game, int index)
 	if (tmp->index == index)
 		return (tmp);
 	return (NULL);
+}
+
+void				ft_sort(t_game *game)
+{
+	int				i;
+	int				j;
+	double			tmp;
+	int 			x;
+	int 			y;
+	j = 0;
+	while (j < game->sprites.amount_sprt - 1)
+	{
+		i = 0;
+		while (i < game->sprites.amount_sprt - j - 1)
+		{
+			if (game->spr_dist[i] < game->spr_dist[i + 1])
+			{
+				tmp = game->spr_dist[i];
+				game->spr_dist[i] = game->spr_dist[i + 1];
+				game->spr_dist[i + 1] = tmp;
+				x = get_sprite(game, i)->x;
+				y = get_sprite(game, i)->y;
+				get_sprite(game, i)->x = get_sprite(game, i + 1)->x;
+				get_sprite(game, i)->y = get_sprite(game, i + 1)->y;
+				get_sprite(game, i + 1)->x = x;
+				get_sprite(game, i + 1)->y = y;
+			}
+			i++;
+		}
+		j++;
+	}
 }

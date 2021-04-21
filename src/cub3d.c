@@ -15,18 +15,9 @@
 
 int render_next_frame(t_game *game)
 {
-    // for (size_t i = 0; i < 64; i++)
-    // {
-    //     for (size_t j = 0; j < 64; j++)
-    //     {
-    //         my_mlx_pixel_put(game->data,j,i,game->texture[4][i * 64 + j]);
-    //     }
-        
-    // }
-    
+    game->current_x = 0;
     print_back(game);
     print_ray(game);
-
     mlx_put_image_to_window(game->mlx.mlx, game->mlx.mlx_win, game->data.img, 0, 0);
     return (0);
 }
@@ -43,7 +34,6 @@ int update(t_game *game)
         render_next_frame(game);
         screenshot(game);
     }
-    
     return (0);
 }
 
@@ -73,6 +63,7 @@ int main(int args, char **argv)
 			game.save = 0;
         init_struct(&game);
         render_next_frame(&game);
+        mlx_hook(game.mlx.mlx_win, 17, 0, close_programm, &game);
         mlx_loop_hook(game.mlx.mlx, update, &game);
         mlx_loop(game.mlx.mlx);
     }

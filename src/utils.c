@@ -20,3 +20,23 @@ void            my_mlx_pixel_put(t_data data, int x, int y, int color)
     dst = data.addr + (y * data.line_length + x * (data.bits_per_pixel / 8));
     *(unsigned int*)dst = color;
 }
+
+int			ft_get_pxl_clr(t_data *txtr, int x, int y)
+{
+	int		*ptr;
+	int		color;
+
+	ptr = (void *)txtr->addr + (y * txtr->line_length + x * \
+												(txtr->bits_per_pixel / 8));
+	color = *(int*)ptr;
+	return (color);
+}
+
+int    close_programm(__unused t_game *game)
+{
+    mlx_destroy_image(game->mlx.mlx, game->data.img);
+	mlx_clear_window(game->mlx.mlx, game->mlx.mlx_win);
+	mlx_destroy_window(game->mlx.mlx, game->mlx.mlx_win);
+
+    exit(0);
+}

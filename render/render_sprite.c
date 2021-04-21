@@ -96,37 +96,6 @@ int init_sprite_structure(t_game *game)
     return (0);
 }
 
-void				ft_sort(t_game *game)
-{
-	int				i;
-	int				j;
-	double			tmp;
-	int 			x;
-	int 			y;
-	j = 0;
-	while (j < game->sprites.amount_sprt - 1)
-	{
-		i = 0;
-		while (i < game->sprites.amount_sprt - j - 1)
-		{
-			if (game->spr_dist[i] < game->spr_dist[i + 1])
-			{
-				tmp = game->spr_dist[i];
-				game->spr_dist[i] = game->spr_dist[i + 1];
-				game->spr_dist[i + 1] = tmp;
-				x = get_sprite(game, i)->x;
-				y = get_sprite(game, i)->y;
-				get_sprite(game, i)->x = get_sprite(game, i + 1)->x;
-				get_sprite(game, i)->y = get_sprite(game, i + 1)->y;
-				get_sprite(game, i + 1)->x = x;
-				get_sprite(game, i + 1)->y = y;
-			}
-			i++;
-		}
-		j++;
-	}
-}
-
 int init_sprite(t_game *game)
 {
 	int				i;
@@ -144,4 +113,24 @@ int init_sprite(t_game *game)
 	}
 	ft_sort(game);
 	return (0);
+}
+
+void render_sprite(t_game *game)
+{
+	game->tmp = game->sprt_pos;
+	if (game->sprites.amount_sprt > 0)
+	{
+		init_sprite(game);
+		while (game->sprt_pos->next != NULL)
+		{
+			spr(game->sprt_pos, game->player, game);
+			if (game->sprites.draw_start_x < game->sprites.draw_end_x)
+				ft_draw_spr(game, game->txtr.sprite->width, game->txtr.sprite->height);
+			game->sprt_pos = game->sprt_pos->next;
+		}
+		spr(game->sprt_pos, game->player, game);
+		if (game->sprites.draw_start_x < game->sprites.draw_end_x)
+			ft_draw_spr(game, game->txtr.sprite->width, game->txtr.sprite->height);
+		game->sprt_pos = game->tmp;
+	}
 }

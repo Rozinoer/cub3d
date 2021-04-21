@@ -195,7 +195,7 @@ int						get_resolution(t_game *game);
 int						get_map(t_game *game);
 int						ft_get_pxl_clr(t_data *txtr, int x, int y);
 int						init_sprite(t_game *game);
-int						render_sprite(t_game *game, int x);
+void					render_sprite(t_game *game);
 void					spr(t_sprt_pos *sprite, t_player player, t_game *game);
 int						init_sprite_structure(t_game *game);
 t_sprt_pos				*sprt_pos_new(int x, int y, int index);
@@ -203,4 +203,6 @@ t_sprt_pos				*get_sprite(t_game *game, int index);
 void					sprt_pos_add_back(t_sprt_pos **lst, t_sprt_pos *new);
 void					ft_draw_spr(t_game *game, int txt_w, int txt_h);
 void					allocate_memory(t_game *game);
+void					ft_sort(t_game *game);
+int						close_programm(t_game *game);
 #endif

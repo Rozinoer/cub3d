@@ -35,9 +35,8 @@ PARSE_LIST =	parse.c \
 				get_floor_ceiling_sprite.c \
 
 RENDER_DIR =	render/
-
-RENDER_LIST = 	render_map.c \
-				render_player.c \
+ 
+RENDER_LIST =	render_player.c \
 				render_utils.c \
 				render_sprite.c \
 

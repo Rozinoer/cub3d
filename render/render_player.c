@@ -111,16 +111,13 @@ static void calculate_txtr_pos(t_game *game, int x, double raydir_x, double rayd
 
 void print_ray(t_game *game)
 {
-	int x;
 	double cameraX;
 	double raydir_x;
 	double raydir_y;
 
-	x = 0;
-	while (x < game->mlx.win_width)
+	while (game->current_x < game->mlx.win_width)
 	{
-		game->current_x = x;
-		cameraX = 2 * x / (double)game->mlx.win_width - 1;  
+		cameraX = 2 * game->current_x / (double)game->mlx.win_width - 1;  
 		raydir_x = game->player.dir_x + game->player.plane_x * cameraX;
 		raydir_y = game->player.dir_y + game->player.plane_y * cameraX;
 
@@ -135,24 +132,9 @@ void print_ray(t_game *game)
 				game->ray.delta_disty = fabs(1 / raydir_y);
 				
 		side_step(game, raydir_x, raydir_y);
-		dda_perform(game, raydir_x, raydir_y, x);
-		calculate_txtr_pos(game, x, raydir_x, raydir_y);
-		x++;
+		dda_perform(game, raydir_x, raydir_y, game->current_x);
+		calculate_txtr_pos(game, game->current_x, raydir_x, raydir_y);
+		game->current_x++;
 	}
-	game->tmp = game->sprt_pos;
-	if (game->sprites.amount_sprt > 0)
-	{
-		init_sprite(game);
-		while (game->sprt_pos->next != NULL)
-		{
-			spr(game->sprt_pos, game->player, game);
-			if (game->sprites.draw_start_x < game->sprites.draw_end_x)
-				ft_draw_spr(game, game->txtr.sprite->width, game->txtr.sprite->height);
-			game->sprt_pos = game->sprt_pos->next;
-		}
-		spr(game->sprt_pos, game->player, game);
-		if (game->sprites.draw_start_x < game->sprites.draw_end_x)
-			ft_draw_spr(game, game->txtr.sprite->width, game->txtr.sprite->height);
-		game->sprt_pos = game->tmp;
-	}
+	render_sprite(game);
 }
