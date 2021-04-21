@@ -83,19 +83,19 @@ static void	count_sprites(t_game *game)
 
 	x = 0;
 	y = 0;
-	game->sprites.amount_sprt = 0;
+	game->sprs.amount_sprt = 0;
 	while (y < game->map.map_size)
 	{
 		while (game->map.map[y][x] != '\0')
 		{
 			if (game->map.map[y][x] == '2')
-				game->sprites.amount_sprt++;
+				game->sprs.amount_sprt++;
 			x++;
 		}
 		x = 0;
 		y++;
 	}
-	if (game->sprites.amount_sprt > 0)
+	if (game->sprs.amount_sprt > 0)
 		allocate_memory(game);
 }
 

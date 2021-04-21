@@ -11,16 +11,14 @@
 /* ************************************************************************** */
 
 #include "cub3d.h"
-# define PMOD 0644
-# define BITMAPINFO_SIZE 40
 
-static void			ft_bmp_header_init(unsigned char *buf, t_game *game)
+static void	ft_bmp_header_init(unsigned char *buf, t_game *game)
 {
 	unsigned int	size;
 
 	size = game->mlx.win_width * game->mlx.win_hight + ALLBMPHEADER;
-	buf[0] = (unsigned char)'B';
-	buf[1] = (unsigned char)'M';
+	buf[0] = (unsigned char) 'B';
+	buf[1] = (unsigned char) 'M';
 	buf[2] = size;
 	buf[3] = size >> 8;
 	buf[4] = size >> 16;
@@ -39,7 +37,7 @@ static void			ft_bmp_header_init(unsigned char *buf, t_game *game)
 	buf[28] = game->data.bits_per_pixel;
 }
 
-static void			ft_create_bmp(t_game *game)
+static void	ft_create_bmp(t_game *game)
 {
 	int				fd;
 	int				i;
@@ -48,7 +46,8 @@ static void			ft_create_bmp(t_game *game)
 
 	ft_bzero(buf, 54);
 	ft_bmp_header_init(buf, game);
-	if ((fd = open(FILE_BMP, O_CREAT | O_RDWR | O_TRUNC, PMOD)) == -1)
+	fd = open(FILE_BMP, O_CREAT | O_RDWR | O_TRUNC, PMOD);
+	if (fd == -1)
 		ft_putstr("Error create bmp file: fd = -1\n");
 	write(fd, buf, ALLBMPHEADER);
 	i = game->mlx.win_hight - 1;
@@ -61,10 +60,10 @@ static void			ft_create_bmp(t_game *game)
 	close(fd);
 }
 
-int     screenshot(t_game *game)
+int	screenshot(t_game *game)
 {
 	ft_create_bmp(game);
 	mlx_destroy_image(game->mlx.mlx, game->data.img);
-    mlx_destroy_window(game->mlx.mlx, game->mlx.mlx_win);
+	mlx_destroy_window(game->mlx.mlx, game->mlx.mlx_win);
 	exit(0);
 }

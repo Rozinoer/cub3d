@@ -12,15 +12,14 @@
 
 #include "cub3d.h"
 
-static void check_str(char *str)
+static void	check_str(char *str)
 {
 	while (*str)
 	{
-		if(*str != ' ' && (*str < '0' || *str > '9') && *str != ',')
+		if (*str != ' ' && (*str < '0' || *str > '9') && *str != ',')
 			ft_error("Error. Color is invalid\n");
 		str++;
 	}
-	
 }
 
 int	get_floor_color(t_game *game)

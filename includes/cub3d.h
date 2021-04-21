@@ -29,6 +29,8 @@
 # define TEXHEIGHT 64
 # define TEXWIDTH 64
 # define FOV 0.5
+# define PMOD 0644
+# define BITMAPINFO_SIZE 40
 
 typedef struct s_data
 {
@@ -99,8 +101,8 @@ typedef struct s_texture
 	t_data				*wall_w;
 	t_data				*wall_e;
 	t_data				*sprite;
-	t_data				*current;
-	int					color;
+	t_data				*cur;
+	int					cl;
 	int					tex_x;
 	int					tex_y;
 	double				wall_x;
@@ -124,19 +126,19 @@ typedef struct s_sprt
 	double				x;
 	double				y;
 	double				inv_det;
-	double				transform_x;
-	double				transform_y;
-	int					sprite_screen_x;
-	int					sprite_height;
-	int					draw_start_y;
-	int					draw_end_y;
+	double				transf_x;
+	double				transf_y;
+	long long int		spr_x;
+	int					spr_height;
+	int					start_y;
+	int					end_y;
 	int					sprite_width;
 	int					draw_start_x;
 	int					draw_end_x;
-	int					txtr_x;
-	int					txtr_y;
+	long long int		txtr_x;
+	long long int		txtr_y;
 	int					color;
-	int					d;
+	long long int		d;
 	int					amount_sprt;
 }						t_sprt;
 
@@ -158,7 +160,7 @@ typedef struct s_game
 	t_player			player;
 	t_data				data;
 	t_ray				ray;
-	t_sprt				sprites;
+	t_sprt				sprs;
 	t_sprt_pos			*sprt_pos;
 	t_sprt_pos			*tmp;
 	t_sprt_pos			*temp;
@@ -193,7 +195,7 @@ void					ft_error(char *str);
 int						get_texpack(t_game *game);
 int						get_resolution(t_game *game);
 int						get_map(t_game *game);
-int						ft_get_pxl_clr(t_data *txtr, int x, int y);
+int						pxl(t_data *txtr, int x, int y);
 int						init_sprite(t_game *game);
 void					render_sprite(t_game *game);
 void					spr(t_sprt_pos *sprite, t_player player, t_game *game);
@@ -203,6 +205,7 @@ t_sprt_pos				*get_sprite(t_game *game, int index);
 void					sprt_pos_add_back(t_sprt_pos **lst, t_sprt_pos *new);
 void					ft_draw_spr(t_game *game, int txt_w, int txt_h);
 void					allocate_memory(t_game *game);
-void					ft_sort(t_game *game);
+void					ft_sort(t_game *game, int i, int j);
 int						close_programm(t_game *game);
+void					draw_sprite(int x, int y, t_game *game, int txt_h);
 #endif

@@ -82,10 +82,10 @@ void	allocate_memory(t_game *game)
 	game->sprt_pos = sprt_pos_new(0, 0, -1);
 	if (!(game->sprt_pos))
 		ft_error("Error memory allocation\n");
-	game->spr_dist = malloc(game->sprites.amount_sprt * sizeof(double));
+	game->spr_dist = malloc(game->sprs.amount_sprt * sizeof(double));
 	if (!(game->spr_dist))
 		ft_error("Error memory allocation\n");
-	game->spr_oder = malloc(game->sprites.amount_sprt * sizeof(int));
+	game->spr_oder = malloc(game->sprs.amount_sprt * sizeof(int));
 	if (!(game->spr_oder))
 		ft_error("Error memory allocation\n");
 	game->z_buff = malloc(game->mlx.win_width * sizeof(double));

@@ -12,7 +12,7 @@
 
 #include "get_next_line.h"
 
-int		free_str(char **str, int error)
+int	free_str(char **str, int error)
 {
 	if (error == -1)
 	{
@@ -30,11 +30,13 @@ int		free_str(char **str, int error)
 
 char	*check_remainder(char *reaminder, char **line)
 {
-	char *p_n;
+	char	*p_n;
 
 	p_n = NULL;
 	if (reaminder)
-		if ((p_n = ft_strchr(reaminder, '\n')))
+	{
+		p_n = ft_strchr(reaminder, '\n');
+		if (p_n)
 		{
 			*p_n = '\0';
 			*line = ft_strjoin(reaminder, "");
@@ -46,6 +48,7 @@ char	*check_remainder(char *reaminder, char **line)
 			while (*reaminder)
 				*reaminder++ = '\0';
 		}
+	}
 	else
 		*line = ft_strnew(1);
 	return (p_n);
@@ -53,7 +56,7 @@ char	*check_remainder(char *reaminder, char **line)
 
 void	str_join(char **str1, char **str2, int flag)
 {
-	char *tmp;
+	char	*tmp;
 
 	if (flag == 1)
 	{
@@ -72,7 +75,7 @@ void	str_join(char **str1, char **str2, int flag)
 	}
 }
 
-int		get_next_line(int fd, char **line)
+int	get_next_line(int fd, char **line)
 {
 	char			*buf;
 	int				byte_was_read;
@@ -85,13 +88,18 @@ int		get_next_line(int fd, char **line)
 	p_n = check_remainder(remainder, line);
 	while (!p_n && byte_was_read > 0)
 	{
-		if (!(buf = malloc(sizeof(char) * (BUFFER_SIZE + 1)))
-				|| (byte_was_read = read(fd, buf, BUFFER_SIZE)) == -1)
+		buf = malloc(sizeof(char) * (BUFFER_SIZE + 1));
+		byte_was_read = read(fd, buf, BUFFER_SIZE);
+		if (!(buf) || (byte_was_read == -1))
 			return (free_str(&buf, -1));
 		buf[byte_was_read] = '\0';
-		if ((p_n = ft_strchr(buf, '\n')))
+		p_n = ft_strchr(buf, '\n');
+		if (p_n)
 			str_join(&p_n, &remainder, 2);
 		str_join(line, &buf, 1);
 	}
-	return ((byte_was_read == 0) ? free_str(&remainder, 0) : 1);
+	if (byte_was_read == 0)
+		return (free_str(&remainder, 0));
+	else
+		return (1);
 }
