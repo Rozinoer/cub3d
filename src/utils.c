@@ -56,6 +56,7 @@ int	init_sprite_structure(t_game *game)
 	}
 	game->tmp = game->sprt_pos;
 	game->sprt_pos = game->tmp->next;
+	free(game->tmp);
 	return (0);
 }
 

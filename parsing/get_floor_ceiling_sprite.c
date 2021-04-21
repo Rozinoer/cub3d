@@ -33,6 +33,7 @@ int	get_floor_color(t_game *game)
 	{
 		if (check_identifer(list->content, "F ") != -1)
 		{
+			list->content = skip(list->content, 2);
 			check_str(list->content + 1);
 			i = check_color(list->content + 2, game, 'F');
 			break ;
@@ -53,6 +54,7 @@ int	get_ceiling_color(t_game *game)
 	{
 		if (check_identifer(list->content, "C ") != -1)
 		{
+			list->content = skip(list->content, 2);
 			check_str(list->content + 1);
 			i = check_color(list->content + 2, game, 'C');
 			break ;

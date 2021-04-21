@@ -193,7 +193,7 @@ int						check_map(t_game *game);
 int						screenshot(t_game *game);
 void					ft_error(char *str);
 int						get_texpack(t_game *game);
-int						get_resolution(t_game *game);
+int						get_resolution(t_game *game, t_list *list);
 int						get_map(t_game *game);
 int						pxl(t_data *txtr, int x, int y);
 int						init_sprite(t_game *game);
@@ -208,4 +208,5 @@ void					allocate_memory(t_game *game);
 void					ft_sort(t_game *game, int i, int j);
 int						close_programm(t_game *game);
 void					draw_sprite(int x, int y, t_game *game, int txt_h);
+char					*skip(char *str, int flag);
 #endif

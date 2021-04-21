@@ -1,4 +1,4 @@
-NAME = cub3d
+NAME = cub3D
 
 CC = gcc
 
@@ -32,6 +32,7 @@ PARSE_LIST =	parse.c \
 				get_r_tex_map.c \
 				parsing_utils.c \
 				check_map.c \
+				get_map.c \
 				get_floor_ceiling_sprite.c \
 
 RENDER_DIR =	render/

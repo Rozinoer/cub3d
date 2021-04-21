@@ -20,20 +20,25 @@ static int	create_rgb(int r, int g, int b)
 		return (-1);
 }
 
-static char	*skip(char *str, int flag)
+char	*skip(char *str, int flag)
 {
 	if (flag == 0)
 	{
 		while ((*str == ' ' || *str == ',') && *str != '\0')
 			str++;
+		if (*str < '0' || *str > '9')
+			ft_error("Error. Bad symbols in color declaration!\n");
 	}
-	else
+	else if (flag == 1)
 	{
 		while (*str == ' ' && *str != '\0')
 			str++;
+		if (*str < '0' || *str > '9')
+			ft_error("Error. Bad symbols in color declaration!\n");
 	}
-	if (*str < '0' || *str > '9')
-		ft_error("Error. Bad symbols in color declaration!\n");
+	else
+		while (*str == ' ')
+			str++;
 	return (str);
 }
 
@@ -68,6 +73,8 @@ int	check_identifer(char *str, char *iden)
 
 	i = ft_strlen(iden);
 	j = 0;
+	while (*str == ' ')
+		str++;
 	while (j <= i && iden[j] != '\0')
 	{
 		if (str[j] != iden[j])

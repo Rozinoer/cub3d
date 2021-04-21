@@ -12,9 +12,10 @@
 
 #include "cub3d.h"
 
-void	ft_error(char *str)
+void	ft_error(__unused char *str)
 {
-	ft_putstr(str);
+	// ft_putstr(str);
+	ft_putstr("Error\n");
 	exit(0);
 }
 
@@ -59,7 +60,7 @@ static int	find_params(t_game *game)
 void static	get_param(t_game *game)
 {
 	find_params(game);
-	get_resolution(game);
+	get_resolution(game, game->param);
 	if (game->mlx.win_width > game->mlx.monitor_width \
 	|| game->mlx.win_hight > game->mlx.monitor_hight)
 	{
