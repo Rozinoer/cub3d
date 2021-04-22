@@ -12,6 +12,31 @@
 
 #include "cub3d.h"
 
+static void	check_val(char **dst)
+{
+	int		num;
+	int		i;
+	char	*tmp;
+	char	*clear;
+
+	i = 0;
+	while (i < 3)
+	{
+		tmp = dst[i];
+		tmp = skip(tmp, 2);
+		num = ft_atoi(dst[i]);
+		tmp = reverse(tmp);
+		clear = tmp;
+		tmp = skip(tmp, 2);
+		free(clear);
+		tmp = reverse(tmp);
+		if (ft_nbrlen(num) != ft_nbrlen(ft_atoi(tmp)))
+			ft_error("Color is invalid!\n");
+		free(tmp);
+		i++;
+	}
+}
+
 static int	check_dst(char **dst)
 {
 	int		i;
@@ -25,7 +50,10 @@ static int	check_dst(char **dst)
 		j++;
 	}
 	if (j == 3)
+	{
+		check_val(dst);
 		return (0);
+	}
 	else
 		ft_error("Invalid color!\n");
 	return (-1);

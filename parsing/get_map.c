@@ -12,6 +12,21 @@
 
 #include "cub3d.h"
 
+static void	double_map(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (*str)
+	{
+		if (*str != ' ')
+			i++;
+		str++;
+	}
+	if (i == 0)
+		ft_error("Double map!\n");
+}
+
 static t_list	*check_empty_line(t_list *tmp)
 {
 	char	*str;
@@ -47,6 +62,7 @@ static void	allocate_map(t_game *game, t_list *tmp)
 	tmp = check_empty_line(tmp);
 	size = ft_lstsize(tmp);
 	game->map.map = ft_calloc(size + 1, sizeof(char *));
+	game->map.map[size] = NULL;
 	if (!(game->map.map))
 		ft_error("Memory is not allocate for map!\n");
 	game->map.map_size = size;
@@ -56,6 +72,9 @@ static void	allocate_map(t_game *game, t_list *tmp)
 		game->map.map[++i] = tmp->content;
 		tmp = tmp->next;
 	}
+	i = 0;
+	while (i < game->map.map_size)
+		double_map(game->map.map[i++]);
 	check_map(game);
 }
 

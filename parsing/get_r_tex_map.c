@@ -49,25 +49,51 @@ int	get_resolution(t_game *game, t_list *list)
 	return (0);
 }
 
+static	char	*check_path(char *path)
+{
+	char	*str;
+	char	*clean;
+
+	str = path;
+	while (*path != ' ' && *path)
+		path++;
+	while (*path != '\0')
+	{
+		if (*path != ' ' && *path != '\0')
+			ft_error("Invalid texture path!\n");
+		path++;
+	}
+	str = reverse(str);
+	clean = str;
+	while (*str == ' ')
+		str++;
+	str = reverse(str);
+	free(clean);
+	return (str);
+}
+
 int	get_texpack(t_game *game)
 {
 	t_list	*list;
+	char	*tmp;
 
 	list = game->param;
+	tmp = list->content;
 	while (list->next)
 	{
-		list->content = skip(list->content, 2);
-		if (check_identifer(list->content, "NO ") == 1)
-			game->map.no_tex = skip(list->content + 3, 2);
-		if (check_identifer(list->content, "SO ") == 1)
-			game->map.so_tex = skip(list->content + 3, 2);
-		if (check_identifer(list->content, "WE ") == 1)
-			game->map.we_tex = skip(list->content + 3, 2);
-		if (check_identifer(list->content, "EA ") == 1)
-			game->map.ea_tex = skip(list->content + 3, 2);
-		if (check_identifer(list->content, "S ") == 1)
-			game->map.sprite_tex = skip(list->content + 2, 2);
+		tmp = skip(tmp, 2);
+		if (check_identifer(tmp, "NO ") == 1)
+			game->map.no_tex = check_path(skip(tmp + 3, 2));
+		else if (check_identifer(tmp, "SO ") == 1)
+			game->map.so_tex = check_path(skip(tmp + 3, 2));
+		else if (check_identifer(tmp, "WE ") == 1)
+			game->map.we_tex = check_path(skip(tmp + 3, 2));
+		else if (check_identifer(tmp, "EA ") == 1)
+			game->map.ea_tex = check_path(skip(tmp + 3, 2));
+		else if (check_identifer(tmp, "S ") == 1)
+			game->map.sprite_tex = skip(tmp + 2, 2);
 		list = list->next;
+		tmp = list->content;
 	}
 	return (0);
 }

@@ -2,7 +2,7 @@ NAME = cub3D
 
 CC = gcc -g
 
-FLAGS = -Wall -Werror -Wextra -fsanitize=undefined
+FLAGS = -Wall -Werror -Wextra 
 
 FRAMEWORKS = -framework OpenGL -framework Appkit
 

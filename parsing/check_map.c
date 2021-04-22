@@ -62,7 +62,7 @@ static void	check_sym(t_game *game, char *sym_pull)
 	y = 0;
 	flag = 0;
 	while (y < game->map.map_size)
-	{
+	{	
 		while (game->map.map[y][x] != '\0')
 		{
 			while (sym_pull[i] != '\0')
