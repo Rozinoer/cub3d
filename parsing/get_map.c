@@ -12,7 +12,7 @@
 
 #include "cub3d.h"
 
-static void	double_map(char *str)
+static int	empty_line(char *str)
 {
 	int	i;
 
@@ -21,10 +21,11 @@ static void	double_map(char *str)
 	{
 		if (*str != ' ')
 			i++;
+		if (i > 0)
+			return (0);
 		str++;
 	}
-	if (i == 0)
-		ft_error("Double map!\n");
+	return (1);
 }
 
 static t_list	*check_empty_line(t_list *tmp)
@@ -70,11 +71,12 @@ static void	allocate_map(t_game *game, t_list *tmp)
 	while (tmp)
 	{
 		game->map.map[++i] = tmp->content;
+		if (empty_line(game->map.map[i]))
+			game->flag = 1;
+		if (!(empty_line(game->map.map[i])) && game->flag == 1)
+			ft_error("Double map!\n");
 		tmp = tmp->next;
 	}
-	i = 0;
-	while (i < game->map.map_size)
-		double_map(game->map.map[i++]);
 	check_map(game);
 }
 

@@ -102,6 +102,7 @@ void	init_struct(t_game *game)
 	player.plane_x = 0;
 	player.plane_y = 0;
 	player.direct = -1;
+	game->flag = 0;
 	mlx_get_screen_size(&game->mlx.monitor_width, &game->mlx.monitor_hight);
 	parser(game, game->mlx.file);
 	get_pos(&player, game);

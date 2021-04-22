@@ -170,6 +170,7 @@ typedef struct s_game
 	int					*spr_oder;
 	double				*spr_dist;
 	int					current_x;
+	int					flag;
 }						t_game;
 
 void					parser(t_game *game, char *str);
