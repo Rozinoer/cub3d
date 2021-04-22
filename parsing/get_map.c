@@ -1,5 +1,32 @@
 #include "cub3d.h"
 
+static t_list *check_empty_line(t_list *tmp)
+{
+    char    *str;
+
+    str = tmp->content;
+    while(tmp->next)
+    {
+        while (*str)
+        {
+            if (*str == ' ')
+                str++;
+            else
+                return (tmp);
+        }
+        tmp = tmp->next;
+        str = tmp->content;
+    }
+    while (*str)
+    {
+        if (*str == ' ')
+            str++;
+        else
+            return (tmp);
+    }
+    return (NULL);
+}
+
 static void	allocate_map(int size, t_game *game, t_list *tmp)
 {
 	int		i;
@@ -44,7 +71,8 @@ int	get_map(t_game *game)
         else if (check_identifer(tmp->content, "C ") > 0)
             i++;
         tmp = tmp->next;
-    }   
+    }
+    tmp = check_empty_line(tmp);
 	size = ft_lstsize(tmp);
 	allocate_map(size, game, tmp);
 	return (0);

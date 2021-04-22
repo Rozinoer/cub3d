@@ -14,8 +14,8 @@
 
 void	ft_error(__unused char *str)
 {
-	ft_putstr(str);
-	// ft_putstr("Error\n");
+	// ft_putstr(str);
+	ft_putstr("Error\n");
 	exit(0);
 }
 
@@ -71,6 +71,12 @@ void static	get_param(t_game *game)
 	get_floor_color(game);
 	get_ceiling_color(game);
 	get_map(game);
+	// int y = 0;
+	// while (y != game->map.map_size)
+	// {
+	// 	printf("%s\n", game->map.map[y]);
+	// 	y++;
+	// }
 }
 
 void	parser(t_game *game, char *str)

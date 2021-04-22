@@ -45,7 +45,7 @@ char	*skip(char *str, int flag)
 	return (str);
 }
 
-int	check_color(char *str, t_game *game, char c)
+int	check_color(char **dst, t_game *game, char c)
 {
 	int		r;
 	int		g;
@@ -53,12 +53,9 @@ int	check_color(char *str, t_game *game, char c)
 	int		color;
 
 	color = -1;
-	r = ft_atoi(str = skip(str, 1));
-	str += ft_nbrlen(r);
-	g = ft_atoi(str = skip(str, 0));
-	str += ft_nbrlen(g);
-	b = ft_atoi(str = skip(str, 0));
-	skip(str, 1);
+	r = ft_atoi(dst[0]);
+	g = ft_atoi(dst[1]);
+	b = ft_atoi(dst[2]);
 	color = create_rgb(r, g, b);
 	if (color != -1 && c == 'F')
 		game->map.floor_color = color;

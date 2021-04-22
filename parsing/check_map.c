@@ -14,7 +14,10 @@
 
 static void	env(t_game *game, int x, int y)
 {
-	if (game->map.map[y][x + 1] && game->map.map[y][x - 1] &&
+	if ((y == 0 || y == game->map.map_size - 1) || \
+	(x == (int)ft_strlen(game->map.map[y] - 1) || x == 0))
+		ft_error("Error. Map is unclosed!\n");
+	else if (game->map.map[y][x + 1] && game->map.map[y][x - 1] &&
 				game->map.map[y + 1][x] && game->map.map[y - 1][x])
 	{
 		if (game->map.map[y][x + 1] == ' ' || game->map.map[y][x - 1] == ' '

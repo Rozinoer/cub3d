@@ -54,9 +54,12 @@ int	init_sprite_structure(t_game *game)
 		y++;
 		x = 0;
 	}
-	game->tmp = game->sprt_pos;
-	game->sprt_pos = game->tmp->next;
-	free(game->tmp);
+	if (game->sprs.amount_sprt > 0)
+	{
+		game->tmp = game->sprt_pos;
+		game->sprt_pos = game->tmp->next;
+		free(game->tmp);
+	}
 	return (0);
 }
 

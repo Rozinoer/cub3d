@@ -184,7 +184,7 @@ void					print_ray(t_game *game);
 void					print_back(t_game *game);
 int						check_identifer(char *str, char *iden);
 int						check_map(t_game *game);
-int						check_color(char *str, t_game *game, char c);
+int						check_color(char **dst, t_game *game, char c);
 int						get_floor_color(t_game *game);
 int						get_ceiling_color(t_game *game);
 void					my_mlx_pixel_put(t_data data, int x, int y, int color);

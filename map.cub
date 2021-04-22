@@ -1,11 +1,12 @@
-R 1080 720
-NO ./textures/wood.xpm
-SO ./textures/wood.xpm
-EA ./textures/wood.xpm
-WE ./textures/wood.xpm
-S ./textures/donuts.xpm
-C 255,             200,    160
+C 255,200,160
 F 122,122,122
+R 1200 800
+NO ./wolftex/greystone.png
+SO ./wolftex/redbrick.png
+EA ./wolftex/wood.png
+WE ./wolftex/wood.png
+S ./wolftex/barrel.png
+
 
 11111111111111111
 10000000000000001
