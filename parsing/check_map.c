@@ -16,16 +16,16 @@ static void	env(t_game *game, int x, int y)
 {
 	if ((y == 0 || y == game->map.map_size - 1) || \
 	(x == (int)ft_strlen(game->map.map[y] - 1) || x == 0))
-		ft_error("Error. Map is unclosed!\n");
+		ft_error("Map is unclosed!\n");
 	else if (game->map.map[y][x + 1] && game->map.map[y][x - 1] &&
 				game->map.map[y + 1][x] && game->map.map[y - 1][x])
 	{
 		if (game->map.map[y][x + 1] == ' ' || game->map.map[y][x - 1] == ' '
 		|| game->map.map[y + 1][x] == ' ' || game->map.map[y - 1][x] == ' ')
-			ft_error("Error. Map is unclosed!\n");
+			ft_error("Map is unclosed!\n");
 	}
 	else
-		ft_error("Error. Map is unclosed!\n");
+		ft_error("Map is unclosed!\n");
 }
 
 static void	check_env(t_game *game)
@@ -69,7 +69,7 @@ static void	check_sym(t_game *game, char *sym_pull)
 				if (game->map.map[y][x] == sym_pull[i++])
 					flag++;
 			if (flag == 0)
-				ft_error("Error. Map is unvalid!\n");
+				ft_error("Map is unvalid!\n");
 			flag = 0;
 			i = 0;
 			x++;

@@ -1,6 +1,6 @@
 NAME = cub3D
 
-CC = gcc
+CC = gcc -g
 
 FLAGS = -Wall -Werror -Wextra -fsanitize=undefined
 
@@ -21,6 +21,7 @@ SRC_LIST =		cub3d.c \
 				key_event.c \
 				utils.c \
 				screenshot.c \
+				pixel_utils.c
 
 INIT_DIR =		init/
 

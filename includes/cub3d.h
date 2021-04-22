@@ -194,7 +194,7 @@ int						screenshot(t_game *game);
 void					ft_error(char *str);
 int						get_texpack(t_game *game);
 int						get_resolution(t_game *game, t_list *list);
-int						get_map(t_game *game);
+void					get_map(t_game *game, int i);
 int						pxl(t_data *txtr, int x, int y);
 int						init_sprite(t_game *game);
 void					render_sprite(t_game *game);

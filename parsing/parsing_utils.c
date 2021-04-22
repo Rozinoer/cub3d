@@ -17,7 +17,8 @@ static int	create_rgb(int r, int g, int b)
 	if (r >= 0 && r <= 255 && g >= 0 && g <= 255 && b >= 0 && b <= 255)
 		return (r << 16 | g << 8 | b);
 	else
-		return (-1);
+		ft_error("Color invalid!\n");
+	return (-1);
 }
 
 char	*skip(char *str, int flag)
@@ -29,15 +30,14 @@ char	*skip(char *str, int flag)
 		if (*str == ',')
 			str++;
 		else
-			ft_error("Error. Bad symbols in color declaration!\n");
-		
+			ft_error("Bad symbols in color declaration!\n");
 	}
 	else if (flag == 1)
 	{
 		while (*str == ' ' && *str != '\0')
 			str++;
 		if (*str < '0' || *str > '9')
-			ft_error("Error. Bad symbols in color declaration!\n");
+			ft_error("Bad symbols in color declaration!\n");
 	}
 	else
 		while (*str == ' ')

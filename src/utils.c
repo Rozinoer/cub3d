@@ -12,23 +12,14 @@
 
 #include "cub3d.h"
 
-void	my_mlx_pixel_put(t_data data, int x, int y, int color)
+static void	sprt_util(t_game *game)
 {
-	char	*dst;
-
-	dst = data.addr + (y * data.line_length + x * (data.bits_per_pixel / 8));
-	*(unsigned int *) dst = color;
-}
-
-int	pxl(t_data *txtr, int x, int y)
-{
-	int		*ptr;
-	int		color;
-
-	ptr = (void *)txtr->addr + (y * txtr->line_length + x * \
-												(txtr->bits_per_pixel / 8));
-	color = *(int *) ptr;
-	return (color);
+	if (game->sprs.amount_sprt > 0)
+	{
+		game->tmp = game->sprt_pos;
+		game->sprt_pos = game->tmp->next;
+		free(game->tmp);
+	}
 }
 
 int	init_sprite_structure(t_game *game)
@@ -54,12 +45,7 @@ int	init_sprite_structure(t_game *game)
 		y++;
 		x = 0;
 	}
-	if (game->sprs.amount_sprt > 0)
-	{
-		game->tmp = game->sprt_pos;
-		game->sprt_pos = game->tmp->next;
-		free(game->tmp);
-	}
+	sprt_util(game);
 	return (0);
 }
 

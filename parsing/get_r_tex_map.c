@@ -12,29 +12,35 @@
 
 #include "cub3d.h"
 
+static void	write_resolution(t_game *game, char *temp, char *tmp)
+{
+	temp = skip(temp, 2);
+	if (ft_atoi(++temp) > 1)
+		game->mlx.win_width = ft_atoi(temp);
+	else
+		ft_error("Resolution is uncorrect!\n");
+	tmp = ft_itoa(game->mlx.win_width);
+	temp += ft_strlen(tmp) + 1;
+	free(tmp);
+	temp = skip(temp, 2);
+	if (ft_atoi(temp) > 1)
+		game->mlx.win_hight = ft_atoi(temp);
+	else
+		ft_error("Resolution is uncorrect!\n");
+}
+
 int	get_resolution(t_game *game, t_list *list)
 {
 	char	*tmp;
 	char	*temp;
 
+	tmp = NULL;
 	while (list->next)
 	{
 		temp = list->content;
 		if (check_identifer(temp, "R ") == 1)
 		{
-			temp = skip(temp, 2);
-			if (ft_atoi(++temp) > 1)
-				game->mlx.win_width = ft_atoi(temp);
-			else
-				ft_error("Error. Resolution is uncorrect!\n");
-			tmp = ft_itoa(game->mlx.win_width);
-			temp += ft_strlen(tmp) + 1;
-			free(tmp);
-			temp = skip(temp, 2);
-			if (ft_atoi(temp) > 1)
-				game->mlx.win_hight = ft_atoi(temp);
-			else
-				ft_error("Error. Resolution is uncorrect!\n");
+			write_resolution(game, list->content, tmp);
 			break ;
 		}
 		else

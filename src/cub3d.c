@@ -46,7 +46,7 @@ static void	check_expansion(char *str)
 	len = ft_strlen(str);
 	str = str + (len - 4);
 	if (ft_strncmp(str, ".cub", 4) != 0)
-		ft_error("Error. Map file haves bad expansion\n");
+		ft_error("Map file haves bad expansion\n");
 }
 
 int	main(int args, char **argv)

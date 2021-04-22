@@ -14,12 +14,12 @@
 
 static int	check_dst(char **dst)
 {
-	int i;
-	int j;
+	int		i;
+	int		j;
 
 	i = 0;
 	j = 0;
-	while(dst[i] != NULL)
+	while (dst[i] != NULL)
 	{
 		i++;
 		j++;
@@ -27,7 +27,7 @@ static int	check_dst(char **dst)
 	if (j == 3)
 		return (0);
 	else
-		ft_error("Error. Invalid color!\n");
+		ft_error("Invalid color!\n");
 	return (-1);
 }
 
@@ -37,7 +37,7 @@ static void	check_str(char *str)
 	{
 		if (*str != ' ' && (*str < '0' || *str > '9') && *str != ',' \
 		&& *str != '\t')
-			ft_error("Error. Color is invalid\n");
+			ft_error("Color is invalid\n");
 		str++;
 	}
 }
@@ -89,7 +89,7 @@ int	get_ceiling_color(t_game *game)
 			dst = ft_split(list->content + 2, ',');
 			check_dst(dst);
 			i = check_color(dst, game, 'C');
-			break;
+			break ;
 		}
 		list = list->next;
 	}

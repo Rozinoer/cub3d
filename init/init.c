@@ -41,7 +41,7 @@ static void	get_pos(t_player *player, t_game *game)
 static void	ft_set_pos_player(t_game *game)
 {
 	if (game->player.direct == -1)
-		ft_error("Error. Player position not found\n");
+		ft_error("Player position not found\n");
 	if (game->player.direct == 'N')
 	{
 		game->player.dir_y = -1;
