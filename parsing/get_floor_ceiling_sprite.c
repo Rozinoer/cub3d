@@ -16,7 +16,8 @@ static void	check_str(char *str)
 {
 	while (*str)
 	{
-		if (*str != ' ' && (*str < '0' || *str > '9') && *str != ',')
+		if (*str != ' ' && (*str < '0' || *str > '9') && *str != ',' \
+		&& *str != '\t')
 			ft_error("Error. Color is invalid\n");
 		str++;
 	}

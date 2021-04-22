@@ -14,8 +14,8 @@
 
 void	ft_error(__unused char *str)
 {
-	// ft_putstr(str);
-	ft_putstr("Error\n");
+	ft_putstr(str);
+	// ft_putstr("Error\n");
 	exit(0);
 }
 

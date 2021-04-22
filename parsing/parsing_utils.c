@@ -24,10 +24,13 @@ char	*skip(char *str, int flag)
 {
 	if (flag == 0)
 	{
-		while ((*str == ' ' || *str == ',') && *str != '\0')
+		while (*str == ' ' && *str != '\0')
 			str++;
-		if (*str < '0' || *str > '9')
+		if (*str == ',')
+			str++;
+		else
 			ft_error("Error. Bad symbols in color declaration!\n");
+		
 	}
 	else if (flag == 1)
 	{
