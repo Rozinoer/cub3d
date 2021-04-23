@@ -14,18 +14,10 @@
 
 static int	empty_line(char *str)
 {
-	int	i;
-
-	i = 0;
-	while (*str)
-	{
-		if (*str != ' ')
-			i++;
-		if (i > 0)
-			return (0);
-		str++;
-	}
-	return (1);
+	if (*str == '\0')
+		return (1);
+	else
+		return (0);
 }
 
 static t_list	*check_empty_line(t_list *tmp)
@@ -37,7 +29,7 @@ static t_list	*check_empty_line(t_list *tmp)
 	{
 		while (*str)
 		{
-			if (*str == ' ')
+			if (*str == ' ' || *str == '\t')
 				str++;
 			else
 				return (tmp);
@@ -47,7 +39,7 @@ static t_list	*check_empty_line(t_list *tmp)
 	}
 	while (*str)
 	{
-		if (*str == ' ')
+		if (*str == ' ' || *str == '\t')
 			str++;
 		else
 			return (tmp);
@@ -57,9 +49,10 @@ static t_list	*check_empty_line(t_list *tmp)
 
 static void	allocate_map(t_game *game, t_list *tmp)
 {
-	int		i;
 	int		size;
+	int		i;
 
+	i = -1;
 	tmp = check_empty_line(tmp);
 	size = ft_lstsize(tmp);
 	game->map.map = ft_calloc(size + 1, sizeof(char *));
@@ -67,14 +60,13 @@ static void	allocate_map(t_game *game, t_list *tmp)
 	if (!(game->map.map))
 		ft_error("Memory is not allocate for map!\n");
 	game->map.map_size = size;
-	i = -1;
 	while (tmp)
 	{
 		game->map.map[++i] = tmp->content;
-		if (empty_line(game->map.map[i]))
+		if (empty_line(tmp->content))
 			game->flag = 1;
-		if (!(empty_line(game->map.map[i])) && game->flag == 1)
-			ft_error("Double map!\n");
+		if (!empty_line(tmp->content) && game->flag == 1)
+			ft_error("Empty lines after map!\n");
 		tmp = tmp->next;
 	}
 	check_map(game);

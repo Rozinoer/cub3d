@@ -65,7 +65,7 @@ void	draw_sprite(int x, int y, t_game *game, int txt_h)
 	}
 }
 
-int	close_programm(__unused t_game *game)
+int	close_programm(t_game *game)
 {
 	mlx_destroy_image(game->mlx.mlx, game->data.img);
 	mlx_clear_window(game->mlx.mlx, game->mlx.mlx_win);

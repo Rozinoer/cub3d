@@ -17,22 +17,19 @@ static void	check_val(char **dst)
 	int		num;
 	int		i;
 	char	*tmp;
-	char	*clear;
 
 	i = 0;
 	while (i < 3)
 	{
 		tmp = dst[i];
 		tmp = skip(tmp, 2);
-		num = ft_atoi(dst[i]);
-		tmp = reverse(tmp);
-		clear = tmp;
-		tmp = skip(tmp, 2);
-		free(clear);
-		tmp = reverse(tmp);
-		if (ft_nbrlen(num) != ft_nbrlen(ft_atoi(tmp)))
+		if (*tmp == '\0')
 			ft_error("Color is invalid!\n");
-		free(tmp);
+		num = ft_atoi(dst[i]);
+		tmp = tmp + ft_nbrlen(num);
+		tmp = skip(tmp, 2);
+		if (*tmp != '\0')
+			ft_error("Color is invalid!\n");
 		i++;
 	}
 }

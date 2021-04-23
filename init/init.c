@@ -26,9 +26,7 @@ static void	get_pos(t_player *player, t_game *game)
 			if (game->map.map[i][j] == 'N' || game->map.map[i][j] == 'S' ||
 			game->map.map[i][j] == 'W' || game->map.map[i][j] == 'E')
 			{
-				player->direct = game->map.map[i][j];
-				player->pos_x = j;
-				player->pos_y = i;
+				double_pos(player, j, i, game->map.map[i][j]);
 				break ;
 			}
 			j++;
@@ -74,7 +72,10 @@ static t_data	*ft_create_img_txtr(char *file, void *ptr_mlx)
 	txtr->img = mlx_xpm_file_to_image(ptr_mlx, file, \
 							&txtr->width, &txtr->height);
 	if (!txtr->img)
+	{
+		printf("%s\n", file);
 		ft_error("Error map: error texture\n");
+	}
 	txtr->addr = mlx_get_data_addr(txtr->img, &txtr->bits_per_pixel, \
 							&txtr->line_length, &txtr->endian);
 	return (txtr);

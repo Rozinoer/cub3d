@@ -15,7 +15,7 @@
 static void	write_resolution(t_game *game, char *temp, char *tmp)
 {
 	temp = skip(temp, 2);
-	if (ft_atoi(++temp) > 1)
+	if (ft_atoi(++temp) > 0)
 		game->mlx.win_width = ft_atoi(temp);
 	else
 		ft_error("Resolution is uncorrect!\n");
@@ -23,7 +23,7 @@ static void	write_resolution(t_game *game, char *temp, char *tmp)
 	temp += ft_strlen(tmp) + 1;
 	free(tmp);
 	temp = skip(temp, 2);
-	if (ft_atoi(temp) > 1)
+	if (ft_atoi(temp) > 0)
 		game->mlx.win_hight = ft_atoi(temp);
 	else
 		ft_error("Resolution is uncorrect!\n");
@@ -59,13 +59,13 @@ static	char	*check_path(char *path)
 		path++;
 	while (*path != '\0')
 	{
-		if (*path != ' ' && *path != '\0')
+		if (*path != ' ' && *path != '\t' && *path != '\0')
 			ft_error("Invalid texture path!\n");
 		path++;
 	}
 	str = reverse(str);
 	clean = str;
-	while (*str == ' ')
+	while (*str == ' ' || *str == '\t')
 		str++;
 	str = reverse(str);
 	free(clean);
@@ -91,7 +91,7 @@ int	get_texpack(t_game *game)
 		else if (check_identifer(tmp, "EA ") == 1)
 			game->map.ea_tex = check_path(skip(tmp + 3, 2));
 		else if (check_identifer(tmp, "S ") == 1)
-			game->map.sprite_tex = skip(tmp + 2, 2);
+			game->map.sprite_tex = check_path(skip(tmp + 2, 2));
 		list = list->next;
 		tmp = list->content;
 	}

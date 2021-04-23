@@ -13,7 +13,7 @@
 #ifndef CUB3D_H
 # define CUB3D_H
 
-# include "../res/libft/libft.h"
+# include "libft.h"
 # include "get_next_line.h"
 # include "../minilibx_opengl_20191021/mlx.h"
 # include <fcntl.h>
@@ -210,4 +210,5 @@ void					ft_sort(t_game *game, int i, int j);
 int						close_programm(t_game *game);
 void					draw_sprite(int x, int y, t_game *game, int txt_h);
 char					*skip(char *str, int flag);
+void					double_pos(t_player *player, int x, int y, char c);
 #endif

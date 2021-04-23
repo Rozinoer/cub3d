@@ -14,7 +14,7 @@
 
 void	ft_error(char *str)
 {
-	ft_putstr("Error.\n");
+	ft_putstr("Error\n");
 	ft_putstr(str);
 	exit(0);
 }
@@ -29,6 +29,10 @@ static int	find_param(t_list *tmp, char *str)
 		if (check_identifer(tmp->content, str) == 1)
 			i++;
 		tmp = tmp->next;
+	}
+	if (i != 1)
+	{
+		printf("%s\n", str);
 	}
 	return (i);
 }

@@ -40,7 +40,7 @@ char	*skip(char *str, int flag)
 			ft_error("Bad symbols in color declaration!\n");
 	}
 	else
-		while (*str == ' ')
+		while (*str == ' ' || *str == '\t')
 			str++;
 	return (str);
 }
@@ -73,7 +73,7 @@ int	check_identifer(char *str, char *iden)
 
 	i = ft_strlen(iden);
 	j = 0;
-	while (*str == ' ')
+	while (*str == ' ' || *str == '\t')
 		str++;
 	while (j <= i && iden[j] != '\0')
 	{

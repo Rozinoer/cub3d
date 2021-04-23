@@ -6,7 +6,7 @@ FLAGS = -Wall -Werror -Wextra
 
 FRAMEWORKS = -framework OpenGL -framework Appkit
 
-INCLUDES = -I includes/ -I libft/
+INCLUDES = -I includes/ -I res/libft/
 
 GNL_DIR =		res/gnl/
 
@@ -26,6 +26,7 @@ SRC_LIST =		cub3d.c \
 INIT_DIR =		init/
 
 INIT_LIST =		init.c \
+				init_utils.c
 
 PARSE_DIR =		parsing/
 
@@ -54,34 +55,34 @@ RENDER= $(addprefix $(RENDER_DIR), $(RENDER_LIST))
 
 SRCS = $(SRC) $(GNL) $(INIT) $(PARSE) $(RENDER)
 
-OBJ = $(SRC:.c=.o) $(GNL:.c=.o)
+OBJ = $(SRCS:.c=.o)
 
 LIBRARY = -L. -lft -lmlx
 
+.PHONY: all clean fclean re run
+
 all: $(NAME)
+
+%.o: %.c
+		$(CC) $(FLAGS) $(INCLUDES) -c $< -o $@
 
 $(NAME): $(OBJ) libft
 		make -C minilibx_opengl_20191021
 		mv minilibx_opengl_20191021/libmlx.a .
 		cp $(LIBFT)/libft.a .
-		$(CC) $(FLAGS) $(SRCS) $(INCLUDES) $(LIBRARY) $(FRAMEWORKS) -o $(NAME)
-		make clean
-		clear
-
+		$(CC) $(FLAGS) $(INCLUDES) $(LIBRARY) $(FRAMEWORKS) -o $(NAME) $(OBJ)
+		rm -rf $(OBJ)
 libft:
 		make -C $(LIBFT)
-
-%.o: %.c
-		gcc -g $(FLAGS) $(INCLUDES) -c $< -o $@
 
 clean:
 		rm -rf $(OBJ) libft.a
 
 fclean: clean
-		make -C minilibx clean
+		make -C minilibx_opengl_20191021 clean
 		rm -rf $(NAME)
 
 re: fclean all
 
 run:
-	./$(NAME)
+	./$(NAME) ./map.cub

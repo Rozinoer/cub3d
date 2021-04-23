@@ -57,7 +57,8 @@ int	main(int args, char **argv)
 	{
 		check_expansion(argv[1]);
 		game.mlx.file = argv[1];
-		if (args == 3 && (ft_strncmp(argv[2], "--save", 6) == 0))
+		if (args == 3 && (ft_strncmp(argv[2], "--save", 6) == 0) \
+		&& ft_strlen(argv[2]) == 6)
 			game.save = 1;
 		else if (args == 3)
 			ft_error("Error arg 2 is not correct\n");
